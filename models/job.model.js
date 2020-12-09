@@ -9,7 +9,8 @@ const jobSchema = new mongoose.Schema(
                 ref: "JobType",
             },
         ],
-        date: String,
+        date: Date,
+        location: Object,
         creator: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Employer",
