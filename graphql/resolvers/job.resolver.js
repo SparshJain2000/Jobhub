@@ -1,7 +1,11 @@
 const Job = require("../../models/job.model");
 const { transformJob } = require("../helpers/index");
+const {
+    jobQuery,
+    projectionBuilder,
+} = require("../../controller/queryBuilder");
 module.exports = {
-    jobs: async () => {
+    jobs: async() => {
         try {
             const jobs = await Job.find()
                 .populate("creator")
@@ -14,7 +18,7 @@ module.exports = {
             throw e;
         }
     },
-    job: async ({ id }) => {
+    job: async({ id }) => {
         try {
             const job = await Job.findById(id)
                 .populate("creator")
@@ -26,19 +30,16 @@ module.exports = {
             throw e;
         }
     },
-    searchJobs: async ({ params }) => {
-        console.log(params.location.city);
+    searchJobs: async({ params }, args, context) => {
         try {
-            const jobs = await Job.find({
-                "location.city": params.location.city,
-                date: {
-                    $gte: new Date(params.startDate),
-                    $lte: new Date(params.lastDate),
-                },
-            })
+            const projection = projectionBuilder(context);
+            let jobs;
+
+            jobs = projection.creator ?
+                await Job.find(jobQuery(params), projection)
                 .populate("creator")
-                .populate("type")
-                .lean();
+                .lean() :
+                await Job.find(jobQuery(params), projection).lean();
             return jobs.map((job) => transformJob(job));
         } catch (e) {
             console.log(e);
