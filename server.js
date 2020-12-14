@@ -4,7 +4,7 @@ const bodyParser = require("body-parser"),
     { graphqlHTTP } = require("express-graphql"),
     mongoose = require("mongoose"),
     gqlSchema = require("./graphql/schema/index"),
-    // isAuth = require("./middleware/index"),
+    { dummyJobs, dummyEmployees } = require("./graphql/helpers/populateDummy"),
     gqlResolvers = require("./graphql/resolvers/index");
 
 app = express();
@@ -34,18 +34,19 @@ app.use(
     }),
 );
 
-// mongoose
-//     .connect(process.env.MONGO_URI, {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//         useCreateIndex: true,
-//     })
-//     .then(() => {
-//         console.log("connected to MONGO 🎉");
-//     });
+mongoose
+    .connect(process.env.DB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    })
+    .then(() => {
+        console.log("connected to MONGO 🎉");
+    });
 
-app.get("/", (req, res) => {
-    res.send(`Welcome to JOBHUB 💼`);
+app.get("/", async(req, res) => {
+    // for (var i = 0; i < 9; i++) dummyEmployees();
+    res.send("HELLO");
 });
 // app.use(express.static("frontend/build"));
 // app.use("*", (req, res) => {
