@@ -1,6 +1,6 @@
-const jobResolver = require("./job");
-// eventResolver = require("./events.resolver"),
-// bookingResolver = require("./booking.resolver");
+const jobResolver = require("./job.resolver"),
+    employerResolver = require("./employer.resolver"),
+    employeeResolver = require("./employee.resolver");
 
 // * define the structure of graphql
 // * query - get
@@ -9,7 +9,6 @@ const jobResolver = require("./job");
 
 module.exports = {
     ...jobResolver,
+    ...employerResolver,
+    ...employeeResolver,
 };
-// ...authResolver,
-// ...eventResolver,
-// ...bookingResolver,
