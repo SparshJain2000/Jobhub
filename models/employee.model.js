@@ -7,6 +7,7 @@ const employeeSchema = new mongoose.Schema({
     rating: Number,
     wage: Number,
     experience: Number,
+    location: Object,
     skills: [{
         typeId: {
             type: mongoose.Schema.Types.ObjectId,
