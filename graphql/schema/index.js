@@ -10,8 +10,10 @@ module.exports = buildSchema(`
                 wage:Float!
                 skills:[JobType!]!
                 rating:Float!
+                location:Location!
                 createdAt:String!
                 updatedAt:String!
+                completedJobs:[Job!]
             }
             type JobType{
                 title:String!
@@ -50,6 +52,14 @@ module.exports = buildSchema(`
                 startDate:String
                 location:InputLocation
             }
+            input EmployeeQuery{
+                rating:Float
+                wage:Float
+                experience:Float
+                skills:String
+                jobCount:Float
+                location:InputLocation
+            }
             input InputLocation{
                 city:String
                 state:String
@@ -63,6 +73,7 @@ module.exports = buildSchema(`
                 jobs: [Job!]!
                 job(id:ID!): Job!
                 searchJobs(params:JobQuery!): [Job!]
+                searchEmployees(params:EmployeeQuery!): [Employee!]
                 employers:[Employer!]!
                 employees:[Employee!]!
             }    
