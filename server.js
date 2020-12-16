@@ -4,7 +4,11 @@ const bodyParser = require("body-parser"),
     { graphqlHTTP } = require("express-graphql"),
     mongoose = require("mongoose"),
     gqlSchema = require("./graphql/schema/index"),
-    { dummyJobs, dummyEmployees } = require("./graphql/helpers/populateDummy"),
+    {
+        dummyJobs,
+        dummyEmployees,
+        addLocationEmployees,
+    } = require("./controller/populateDummy"),
     gqlResolvers = require("./graphql/resolvers/index");
 
 app = express();
@@ -46,6 +50,7 @@ mongoose
 
 app.get("/", async(req, res) => {
     // for (var i = 0; i < 9; i++) dummyEmployees();
+    // addLocationEmployees();
     res.send("HELLO");
 });
 // app.use(express.static("frontend/build"));

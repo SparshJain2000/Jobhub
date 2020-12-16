@@ -1,7 +1,7 @@
 const casual = require("casual");
-const Employer = require("../../models/employer.model"),
-    Employee = require("../../models/employee.model"),
-    Job = require("../../models/job.model");
+const Employer = require("../models/employer.model"),
+    Employee = require("../models/employee.model"),
+    Job = require("../models/job.model");
 const dummyJobs = async() => {
     for (let i = 0; i < 10; i++) {
         try {
@@ -102,7 +102,7 @@ const dummyEmployees = async() => {
     const result = await EmployeeObject.save();
 };
 const updateCompletedJobId = async() => {
-    let employees = Employee.find({});
+    let employees = await Employee.find({});
     await employees.forEach(async(employee) => {
         employee.completedJobs = [
             casual.random_element([
@@ -121,4 +121,24 @@ const updateCompletedJobId = async() => {
         const result = await employee.save();
     });
 };
-module.exports = { dummyJobs, dummyEmployees, updateCompletedJobId };
+const addLocationEmployees = async() => {
+    let employees = await Employee.find({});
+    await employees.forEach(async(employee) => {
+        employee.location = {
+            country: casual.country,
+            city: casual.city,
+            pin: casual.zip(),
+            streetNo: casual.street,
+            state: casual.state,
+            latitude: casual.latitude,
+            longitude: casual.longitude,
+        };
+        employee.save();
+    });
+};
+module.exports = {
+    dummyJobs,
+    dummyEmployees,
+    updateCompletedJobId,
+    addLocationEmployees,
+};
