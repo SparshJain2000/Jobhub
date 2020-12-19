@@ -136,9 +136,18 @@ const addLocationEmployees = async() => {
         employee.save();
     });
 };
+const updateJobs = async() => {
+    let jobs = await Job.find({});
+    await jobs.forEach(async(job) => {
+        (job.price = casual.integer((from = 100), (to = 100000))),
+        console.log(job);
+        await job.save();
+    });
+};
 module.exports = {
     dummyJobs,
     dummyEmployees,
     updateCompletedJobId,
     addLocationEmployees,
+    updateJobs,
 };
