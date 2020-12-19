@@ -1,0 +1,27 @@
+svg {
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    /* fill: var(--dark); */
+    fill: white;
+    width: calc(138% + 1.3px);
+}
+
+.cont {
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    padding-bottom: 40%;
+    vertical-align: middle;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    height: 70vh;
+}
+
+@media (max-width: 992px) {
+    .cont {
+        height: 40vh;
+    }
+}
