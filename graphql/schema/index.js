@@ -35,6 +35,7 @@ module.exports = buildSchema(`
                 type:[JobType]!
                 date: String!
                 location:Location
+                price:Float!
                 creator: Employer!
             }   
             type Location{
@@ -51,6 +52,8 @@ module.exports = buildSchema(`
                 lastDate:String
                 startDate:String
                 location:InputLocation
+                minPrice:Float
+                maxPrice:Float
             }
             input EmployeeQuery{
                 rating:Float
