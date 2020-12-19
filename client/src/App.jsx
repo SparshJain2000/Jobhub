@@ -1,6 +1,6 @@
-import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./pages/home.page";
+import Job from "./pages/job.page";
 import Navbar from "./components/navbar.component";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
             <main>
                 <Switch>
                     <Route path='/' exact component={Home} />
+                    <Route path='/jobs' exact component={Job} />
                     {/* <Route path='/about' component={About} />
                     <Route path='/event' exact component={Event} />
                     <Route path='/event/national' component={NationalEvent} />
