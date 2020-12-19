@@ -11,6 +11,7 @@ const jobSchema = new mongoose.Schema({
     }, ],
     date: Date,
     location: Object,
+    price: Number,
     creator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Employer",
