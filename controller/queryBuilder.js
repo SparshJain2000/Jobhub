@@ -9,6 +9,9 @@ const jobQuery = (params) => {
     if (params.startDate) query.date = { $gte: new Date(params.startDate) };
     if (params.lastDate)
         query.date = {...query.date, $lte: new Date(params.lastDate) };
+    if (params.minPrice) query.price = { $gte: params.minPrice };
+    if (params.maxPrice)
+        query.price = {...query.price, $lte: params.maxPrice };
     return query;
 };
 const employeeQuery = (params) => {
