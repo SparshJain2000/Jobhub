@@ -48,7 +48,7 @@ module.exports = buildSchema(`
                 Longitude:Float
             }
             input JobQuery{
-                type:String
+                type:[String]
                 lastDate:String
                 startDate:String
                 location:InputLocation
