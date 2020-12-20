@@ -52,12 +52,12 @@ const NavbarComponent = () => {
                 </div>
                 <NavbarToggler
                     onClick={toggle}
-                    className={`position-relative ${
+                    className={` position-relative ${
                         !isOpen ? "collapsed" : ""
                     }`}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span className='icon-bar'></span>
+                    <span className='icon-bar'></span>
+                    <span className='icon-bar'></span>
                 </NavbarToggler>
 
                 <Collapse
@@ -67,14 +67,14 @@ const NavbarComponent = () => {
                     <Nav className='row justify-content-center px-4' navbar>
                         <NavItem className='m-1 my-2 my-lg-1'>
                             <NavLink to='/' exact>
-                                Homes
+                                Home
                             </NavLink>
                         </NavItem>
                         <NavItem className='m-1 my-2 my-lg-1'>
                             <NavLink to='/about'>About</NavLink>
                         </NavItem>
                         <NavItem className='m-1 my-2 my-lg-1'>
-                            <NavLink to='/event'>Events</NavLink>
+                            <NavLink to='/jobs'>Jobs</NavLink>
                             <UncontrolledDropdown
                                 nav
                                 inNavbar
