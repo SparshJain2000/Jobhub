@@ -14,7 +14,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&family=Montserrat:wght@400;500;700&display=swap");
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -43,7 +43,7 @@
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
-    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Open Sans Emoji", "Open Sans Symbol", "Noto Color Emoji";
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -75,7 +75,7 @@ section {
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Open Sans Emoji", "Open Sans Symbol", "Noto Color Emoji";
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -392,7 +392,7 @@ h6,
 .h5,
 .h6 {
     margin-bottom: 0.5rem;
-    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-weight: 500;
     line-height: 1.2;
     color: #5a5a5a;
@@ -2154,9 +2154,9 @@ pre code {
 .form-control:focus {
     color: #5a5a5a;
     background-color: #fff;
-    border-color: #d0eae2;
+    border-color: #75afca;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .form-control::-webkit-input-placeholder {
@@ -2675,7 +2675,7 @@ textarea.form-control.is-invalid {
 .btn:focus,
 .btn.focus {
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .btn.disabled,
@@ -4005,11 +4005,11 @@ input[type="button"].btn-block {
 }
 
 .custom-control-input:focus~.custom-control-label::before {
-    box-shadow: 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .custom-control-input:focus:not(:checked)~.custom-control-label::before {
-    border-color: #d0eae2;
+    border-color: #75afca;
 }
 
 .custom-control-input:not(:disabled):active~.custom-control-label::before {
@@ -4153,9 +4153,9 @@ input[type="button"].btn-block {
 }
 
 .custom-select:focus {
-    border-color: #d0eae2;
+    border-color: #75afca;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .custom-select:focus::-ms-value {
@@ -4218,8 +4218,8 @@ input[type="button"].btn-block {
 }
 
 .custom-file-input:focus~.custom-file-label {
-    border-color: #d0eae2;
-    box-shadow: 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    border-color: #75afca;
+    box-shadow: 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .custom-file-input[disabled]~.custom-file-label,
@@ -4283,15 +4283,15 @@ input[type="button"].btn-block {
 }
 
 .custom-range:focus::-webkit-slider-thumb {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .custom-range:focus::-moz-range-thumb {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .custom-range:focus::-ms-thumb {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .custom-range::-moz-focus-outer {
@@ -5315,7 +5315,7 @@ input[type="button"].btn-block {
 .page-link:focus {
     z-index: 3;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(120, 194, 173, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(120, 171, 194, 0.25);
 }
 
 .page-item:first-child .page-link {
@@ -6458,7 +6458,7 @@ a.close.disabled {
     z-index: 1070;
     display: block;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Open Sans Emoji", "Open Sans Symbol", "Noto Color Emoji";
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
@@ -6583,7 +6583,7 @@ a.close.disabled {
     z-index: 1060;
     display: block;
     max-width: 276px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Open Sans Emoji", "Open Sans Symbol", "Noto Color Emoji";
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
@@ -10624,7 +10624,7 @@ a.text-dark:focus {
 }
 
 .navbar {
-    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .bg-dark {
@@ -10636,7 +10636,7 @@ a.text-dark:focus {
 }
 
 .btn {
-    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .btn,
@@ -10810,15 +10810,15 @@ a.text-dark:focus {
 .table .thead-dark th {
     background-color: var(--primary);
     border-color: rgba(0, 0, 0, 0.05);
-    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 legend {
-    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Montserrat, -apple-system, system-ui, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .dropdown-menu {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Open Sans", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Open Sans Emoji", "Open Sans Symbol", "Noto Color Emoji";
 }
 
 .breadcrumb a {
