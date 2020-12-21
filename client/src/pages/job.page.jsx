@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import JobCard from "../components/jobCard.component";
 import json from "../assets/data.json";
 import "../styles/job.css";
@@ -26,6 +26,7 @@ export default class Job extends Component {
         console.log(this.state.jobs);
     }
     componentDidMount() {
+        this.setQuery(this.props?.location?.state?.query);
         this.updateWindowDimensions();
         window.addEventListener("resize", this.updateWindowDimensions);
     }
@@ -48,6 +49,7 @@ export default class Job extends Component {
     }
     setQuery(query) {
         this.setState({ query });
+        this.setQueryModal();
     }
     setCurrentJob(currentJob) {
         this.setState({ currentJob });
@@ -59,34 +61,36 @@ export default class Job extends Component {
                 <div className='position-sticky d-none d-md-block col-md-4 col-lg-3 p-3 '>
                     <div className=' position-sticky'>
                         <QueryInput
+                            {...this.props}
                             query={this.state.query}
                             setQuery={this.setQuery}
                             setJobs={this.setJobs}
                         />
                     </div>
                 </div>
-                <div className='d-block-d-md-none'>
+                {this.state.width <= 767 && (
                     <Modal
+                        className='d-block-d-md-none'
                         isOpen={this.state.queryModal}
                         toggle={this.setQueryModal}>
                         <ModalBody>
                             <QueryInput
+                                {...this.props}
                                 query={this.state.query}
                                 setQuery={this.setQuery}
                                 setJobs={this.setJobs}
                             />
                         </ModalBody>
                     </Modal>
-                </div>
-                <div className='flex-grow pt-3'>
-                    <h4 className='text-align-center position-relative'>
-                        Jobs
-                        <Button
-                            className='d-block d-md-none float-right mr-1'
-                            onClick={this.setQueryModal}>
-                            <FontAwesomeIcon icon={faSlidersH} />
-                        </Button>
-                    </h4>
+                )}
+                <div className='flex-grow pt-3  position-relative'>
+                    <h4 className='text-align-center'>Jobs</h4>
+                    <Button
+                        className='d-block d-md-none position-absolute mr-2 mt-2'
+                        style={{ right: "0", top: "0", cursor: "pointer" }}
+                        onClick={this.setQueryModal}>
+                        <FontAwesomeIcon icon={faSlidersH} />
+                    </Button>
                     <hr />
                     <div className='row flex-row'>
                         {json.map((job) => (
