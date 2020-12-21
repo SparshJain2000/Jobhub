@@ -1,4 +1,4 @@
-svg {
+#shape {
     display: inline-block;
     position: absolute;
     bottom: 0;
@@ -17,7 +17,7 @@ svg {
     overflow: hidden;
     top: 0;
     left: 0;
-    height: 70vh;
+    height: 80vh;
 }
 
 @media (max-width: 992px) {

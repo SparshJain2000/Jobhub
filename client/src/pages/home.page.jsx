@@ -1,11 +1,12 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import img from "../assets/home.png";
 import AnimatedBackground from "../components/animatedBackground.component";
-import "../styles/bgPattern.css";
+
 import "../styles/home.css";
 const Home = () => {
     return (
-        <Fragment>
+        <>
             <AnimatedBackground />
             <div className='row mx-0'>
                 <div className='col-12 col-md-6 my-auto pl-5 '>
@@ -19,16 +20,18 @@ const Home = () => {
                         <button className='btn btn-sm btn-secondary mr-1'>
                             Hire worker
                         </button>
-                        <button className='btn btn-sm btn-outline-secondary ml-1'>
+                        <Link
+                            to='/jobs'
+                            className='btn btn-sm btn-outline-secondary ml-1'>
                             Get Jobs
-                        </button>
+                        </Link>
                     </div>
                 </div>
                 <div className='col-12 col-md-6 d-none d-md-flex'>
                     <img src={img} className='img-fluid' alt='photu' />
                 </div>
             </div>
-        </Fragment>
+        </>
     );
 };
 export default Home;
