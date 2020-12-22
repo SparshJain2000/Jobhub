@@ -1,13 +1,13 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import JobCard from "../components/jobCard.component";
-import json from "../assets/data.json";
+// import json from "../assets/data.json";
 import "../styles/job.css";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 import QueryInput from "../components/queryInput.component";
-import { useQuery, gql } from "@apollo/client";
-import { GET_JOBS } from "../graphql/query.js";
+import { useQuery } from "@apollo/client";
+import { SEARCH_JOBS } from "../graphql/query.js";
 const useWindowSize = () => {
     const [size, setSize] = useState(0);
     useLayoutEffect(() => {
@@ -20,31 +20,36 @@ const useWindowSize = () => {
     }, []);
     return size;
 };
-const Jobs = ({ currentJob, setCurrentJob }) => {
-    const { loading, error, data } = useQuery(GET_JOBS);
-    if (loading) return <p>Loading ...</p>;
-    if (error) return <p>Error</p>;
-    console.log(data);
+const Jobs = ({ currentJob, setCurrentJob, toggleJobModal, query }) => {
+    console.log(query);
+    const { loading, data, error } = useQuery(SEARCH_JOBS, {
+        variables: query,
+    });
+    if (loading) return <p className='w-100'>Loading ...</p>;
+    if (error) return <p className='w-100'>Error</p>;
+    if (data) console.log(data);
     return (
         <div className='row flex-row'>
-            {data.jobs.map((job) => (
+            {data?.searchJobs?.map((job) => (
                 <JobCard
+                    key={job._id}
                     job={job}
                     currentJob={currentJob}
                     setCurrentJob={setCurrentJob}
+                    toggleJobModal={toggleJobModal}
                 />
             ))}
         </div>
     );
 };
 const Job = (props) => {
-    const [jobs, setJobs] = useState(null);
+    // const [jobs, setJobs] = useState(null);
     const [currentJob, setCurrentJob] = useState(null);
     const [query, setQuery] = useState(null);
-    const [jobModal, setJobModal] = useState(null);
-    const [queryModal, setQueryModal] = useState(null);
+    const [jobModal, setJobModal] = useState(false);
+    const [queryModal, setQueryModal] = useState(false);
     const width = useWindowSize();
-
+    console.log(width);
     const toggleJobModal = () => setJobModal(!jobModal);
     const toggleQueryModal = () => setQueryModal(!queryModal);
 
@@ -56,7 +61,7 @@ const Job = (props) => {
                         {...props}
                         query={query}
                         setQuery={setQuery}
-                        setJobs={setJobs}
+                        setJobs={null}
                     />
                 </div>
             </div>
@@ -70,7 +75,7 @@ const Job = (props) => {
                             {...props}
                             query={query}
                             setQuery={setQuery}
-                            setJobs={setJobs}
+                            setJobs={null}
                         />
                     </ModalBody>
                 </Modal>
@@ -84,7 +89,12 @@ const Job = (props) => {
                     <FontAwesomeIcon icon={faSlidersH} />
                 </Button>
                 <hr />
-                <Jobs currentJob={currentJob} setCurrentJob={setCurrentJob} />
+                <Jobs
+                    currentJob={currentJob}
+                    setCurrentJob={setCurrentJob}
+                    toggleJobModal={toggleJobModal}
+                    query={query}
+                />
             </div>
             {currentJob && (
                 <div className='position-sticky d-none d-md-block col-3 p-3'>
