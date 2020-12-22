@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardTitle, CardText } from "reactstrap";
 
-const JobCard = ({ currentJob, job, setCurrentJob }) => {
+const JobCard = ({ currentJob, job, setCurrentJob, toggleJobModal }) => {
     const days = parseInt(
         (new Date() - new Date(job.updatedAt)) / (1000 * 60 * 60 * 24),
         10,
@@ -9,11 +9,12 @@ const JobCard = ({ currentJob, job, setCurrentJob }) => {
     return (
         <div
             className='col-12 p-2'
-            onClick={() =>
+            onClick={() => {
                 setCurrentJob(
                     currentJob && job._id === currentJob._id ? null : job,
-                )
-            }>
+                );
+                toggleJobModal();
+            }}>
             <Card className='row flex-row h-100'>
                 <div className='col-12 p-3'>
                     <CardTitle tag='h5'>{job.title}</CardTitle>
