@@ -1,8 +1,21 @@
 import React, { Component, Fragment } from "react";
-import { Form, FormGroup, CustomInput, Label, Input, Button } from "reactstrap";
+import {
+    Form,
+    FormGroup,
+    CustomInput,
+    Label,
+    Input,
+    Button,
+    Badge,
+} from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import {
+    faChevronUp,
+    faChevronDown,
+    faCross,
+    faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 // import styled, { keyframes } from "styled-components";
 // import { slideInDown } from "react-animations";
 
@@ -17,12 +30,17 @@ export default class QueryInput extends Component {
             headers: { type: true },
             query: {
                 set: false,
-                type: {},
+                type: {
+                    Painter: true,
+                    Cleaning: false,
+                },
             },
         };
         this.toggleHeaders = this.toggleHeaders.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.submitQuery = this.submitQuery.bind(this);
+        this.removeFromType = this.removeFromType.bind(this);
+        this.addToType = this.addToType.bind(this);
     }
     componentDidMount() {
         if (!this.state.set) console.log(this.props.query);
@@ -108,7 +126,12 @@ export default class QueryInput extends Component {
         for (let field in query) {
             !query[field] && delete query[field];
         }
-        console.log(query);
+        if (
+            Object.keys(query.location).length === 0 &&
+            query.location.constructor === Object
+        )
+            delete query.location;
+        if (query.type.length === 0) delete query.type;
         await this.props.setQuery(query);
         this.props.history.push({
             pathname: `/jobs/`,
@@ -117,7 +140,39 @@ export default class QueryInput extends Component {
             },
         });
     }
+    addToType(x) {
+        x = x.split(" ")[0].toLowerCase();
+        this.setState({
+            query: {
+                ...this.state.query,
+                type: {
+                    ...this.state.query.type,
+                    [x]: true,
+                },
+            },
+        });
+    }
+    removeFromType(x) {
+        x = x.split(" ")[0].toLowerCase();
+        this.setState({
+            query: {
+                ...this.state.query,
+                type: {
+                    ...this.state.query.type,
+                    [x]: false,
+                },
+            },
+        });
+    }
     render() {
+        const types = [
+            "Painter",
+            "Electrician",
+            "Plumber",
+            "Cleaning",
+            "Manual Labor",
+            "Appliance Repair",
+        ];
         return (
             <Fragment>
                 <h4 className='text-align-center'> Filters </h4> <hr />
@@ -138,8 +193,38 @@ export default class QueryInput extends Component {
                                 />
                             </div>
                         </h6>
-                        {this.state.headers.type && (
-                            <>
+                        {this.state.headers.type &&
+                            types.map((x) => (
+                                <>
+                                    {this.state.query.type[
+                                        x.split(" ")[0].toLowerCase()
+                                    ] ? (
+                                        <Badge
+                                            color='secondary'
+                                            className='selectable mx-1'>
+                                            {x}{" "}
+                                            <span
+                                                className='cross'
+                                                onClick={() =>
+                                                    this.removeFromType(x)
+                                                }>
+                                                <FontAwesomeIcon
+                                                    icon={faTrash}
+                                                />
+                                            </span>
+                                        </Badge>
+                                    ) : (
+                                        <Badge
+                                            color='gray'
+                                            className='mx-1 selectable'
+                                            onClick={() => this.addToType(x)}>
+                                            {x}
+                                        </Badge>
+                                    )}
+                                </>
+                            ))}
+
+                        {/* <>
                                 <CustomInput
                                     type='checkbox'
                                     id='cleaning'
@@ -200,8 +285,7 @@ export default class QueryInput extends Component {
                                     }
                                     label='Painter'
                                 />
-                            </>
-                        )}
+                            </> */}
                     </FormGroup>
                     <hr />
                     <FormGroup>
