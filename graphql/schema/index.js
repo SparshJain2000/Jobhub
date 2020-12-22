@@ -37,6 +37,7 @@ module.exports = buildSchema(`
                 location:Location
                 price:Float!
                 creator: Employer!
+                updatedAt:String!
             }   
             type Location{
                 city:String
