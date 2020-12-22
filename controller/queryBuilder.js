@@ -5,13 +5,22 @@ const jobQuery = (params) => {
         const { location } = params;
         for (const x in location) query[`location.${x}`] = location[x];
     }
-    if (params.type) query["type.title"] = { $in: params.type };
+    if (params.type) {
+        params.type = params.type.map(
+            (string) =>
+            new RegExp(
+                `^${string.charAt(0).toUpperCase() + string.slice(1)}*`,
+            ),
+        );
+
+        query["type.title"] = { $in: params.type };
+    }
     if (params.startDate) query.date = { $gte: new Date(params.startDate) };
     if (params.lastDate)
-        query.date = { ...query.date, $lte: new Date(params.lastDate) };
+        query.date = {...query.date, $lte: new Date(params.lastDate) };
     if (params.minPrice) query.price = { $gte: params.minPrice };
     if (params.maxPrice)
-        query.price = { ...query.price, $lte: params.maxPrice };
+        query.price = {...query.price, $lte: params.maxPrice };
     return query;
 };
 const employeeQuery = (params) => {
