@@ -1,131 +1,134 @@
-import React, { Component } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import JobCard from "../components/jobCard.component";
-import json from "../assets/data.json";
+import Job from "../components/job.component";
+// import json from "../assets/data.json";
 import "../styles/job.css";
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 import QueryInput from "../components/queryInput.component";
-export default class Job extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            jobs: json,
-            query: null,
-            currentJob: null,
-            jobModal: false,
-            queryModal: false,
-            width: 0,
-        };
-        this.setJobs = this.setJobs.bind(this);
-        this.setQuery = this.setQuery.bind(this);
-        this.setJobModal = this.setJobModal.bind(this);
-        this.setQueryModal = this.setQueryModal.bind(this);
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-        this.setCurrentJob = this.setCurrentJob.bind(this);
-        console.log(this.state.jobs);
-    }
-    componentDidMount() {
-        this.setQuery(this.props?.location?.state?.query);
-        this.updateWindowDimensions();
-        window.addEventListener("resize", this.updateWindowDimensions);
-    }
+import { useQuery } from "@apollo/client";
+import { SEARCH_JOBS } from "../graphql/query.js";
+const useWindowSize = () => {
+    const [size, setSize] = useState(0);
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize(window.innerWidth);
+        }
+        window.addEventListener("resize", updateSize);
+        updateSize();
+        return () => window.removeEventListener("resize", updateSize);
+    }, []);
+    return size;
+};
+const Jobs = ({ currentJob, setCurrentJob, toggleJobModal, query }) => {
+    const { loading, data, error } = useQuery(SEARCH_JOBS, {
+        variables: query,
+    });
+    if (loading) return <p className='w-100 text-align-center'>Loading ...</p>;
+    if (error) return <p className='w-100 text-align-center'>Error</p>;
+    if (data) console.log(data);
+    return (
+        <div className='row flex-row'>
+            {data?.searchJobs && data?.searchJobs.length === 0 ? (
+                <p className='w-100 text-align-center'>No Job Found</p>
+            ) : (
+                data?.searchJobs?.map((job) => (
+                    <JobCard
+                        key={job._id}
+                        job={job}
+                        currentJob={currentJob}
+                        setCurrentJob={setCurrentJob}
+                        toggleJobModal={toggleJobModal}
+                    />
+                ))
+            )}
+        </div>
+    );
+};
+const JobPage = (props) => {
+    // const [jobs, setJobs] = useState(null);
+    const [currentJob, setCurrentJob] = useState(null);
+    const [query, setQuery] = useState(null);
+    const [jobModal, setJobModal] = useState(false);
+    const [queryModal, setQueryModal] = useState(false);
+    const width = useWindowSize();
+    console.log(width);
+    const toggleJobModal = () => {
+        width <= 767 && jobModal && setCurrentJob(null);
+        setJobModal(!jobModal);
+    };
+    const toggleQueryModal = () => setQueryModal(!queryModal);
 
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.updateWindowDimensions);
-    }
-
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
-    }
-    setJobModal() {
-        this.setState({ jobModal: !this.state.jobModal });
-    }
-    setQueryModal() {
-        this.setState({ queryModal: !this.state.queryModal });
-    }
-    setJobs(jobs) {
-        this.setState({ jobs });
-    }
-    setQuery(query) {
-        this.setState({ query });
-        this.setQueryModal();
-    }
-    setCurrentJob(currentJob) {
-        this.setState({ currentJob });
-        if (currentJob) this.setJobModal();
-    }
-    render() {
-        return (
-            <div className='w-100 d-flex flex-row mx-0 position-relative'>
-                <div className='position-sticky d-none d-md-block col-md-4 col-lg-3 p-3 '>
-                    <div className=' position-sticky'>
-                        <QueryInput
-                            {...this.props}
-                            query={this.state.query}
-                            setQuery={this.setQuery}
-                            setJobs={this.setJobs}
-                        />
-                    </div>
+    return (
+        <div className='w-100 d-flex flex-row mx-0 position-relative'>
+            <div className='position-sticky d-none d-md-block col-md-4 col-lg-3 p-3 '>
+                <div className=' position-sticky'>
+                    <QueryInput
+                        {...props}
+                        query={query}
+                        setQuery={setQuery}
+                        setJobs={null}
+                        setQueryModal={setQueryModal}
+                    />
                 </div>
-                {this.state.width <= 767 && (
-                    <Modal
-                        className='d-block-d-md-none'
-                        isOpen={this.state.queryModal}
-                        toggle={this.setQueryModal}>
-                        <ModalBody>
-                            <QueryInput
-                                {...this.props}
-                                query={this.state.query}
-                                setQuery={this.setQuery}
-                                setJobs={this.setJobs}
-                            />
-                        </ModalBody>
-                    </Modal>
-                )}
-                <div className='flex-grow pt-3  position-relative'>
-                    <h4 className='text-align-center'>Jobs</h4>
-                    <Button
-                        className='d-block d-md-none position-absolute mr-2 mt-2'
-                        style={{ right: "0", top: "0", cursor: "pointer" }}
-                        onClick={this.setQueryModal}>
-                        <FontAwesomeIcon icon={faSlidersH} />
-                    </Button>
-                    <hr />
-                    <div className='row flex-row'>
-                        {json.map((job) => (
-                            <JobCard
-                                job={job}
-                                currentJob={this.state.currentJob}
-                                setCurrentJob={this.setCurrentJob}
-                            />
-                        ))}
-                    </div>
-                </div>
-                {this.state.currentJob && (
-                    <div className='position-sticky d-none d-md-block col-3 p-3'>
-                        <div className=' position-sticky'>
-                            <h4 className='text-align-center'>
-                                {this.state.currentJob.title}
-                            </h4>
-                            <hr />
-                        </div>
-                        {this.state.width <= 767 && (
-                            <Modal
-                                className='d-block d-md-none'
-                                isOpen={this.state.jobModal}
-                                toggle={this.setJobModal}>
-                                <ModalHeader toggle={this.setJobModal}>
-                                    {this.state.currentJob.title}
-                                </ModalHeader>
-                                <ModalBody>
-                                    {this.state.currentJob.description}
-                                </ModalBody>
-                            </Modal>
-                        )}
-                    </div>
-                )}
             </div>
-        );
-    }
-}
+            {width <= 767 && (
+                <Modal
+                    className='d-block-d-md-none'
+                    isOpen={queryModal}
+                    toggle={toggleQueryModal}>
+                    <ModalBody>
+                        <QueryInput
+                            {...props}
+                            query={query}
+                            setQuery={setQuery}
+                            setJobs={null}
+                            setQueryModal={setQueryModal}
+                        />
+                    </ModalBody>
+                </Modal>
+            )}
+            <div className='flex-grow-1 pt-3  position-relative'>
+                <h4 className='text-align-center'>Jobs</h4>
+                <Button
+                    color='outline-secondary'
+                    className='d-block d-md-none position-absolute mr-2 mt-2'
+                    style={{ right: "0", top: "0", cursor: "pointer" }}
+                    onClick={toggleQueryModal}>
+                    <FontAwesomeIcon icon={faSlidersH} />
+                </Button>
+                <hr />
+                <Jobs
+                    currentJob={currentJob}
+                    setCurrentJob={setCurrentJob}
+                    toggleJobModal={toggleJobModal}
+                    query={query}
+                />
+            </div>
+            {currentJob && (
+                <div className='position-sticky d-none d-md-block col-3 p-3'>
+                    <div className=' position-sticky'>
+                        <Job id={currentJob._id} />
+                    </div>
+                    {width <= 767 && (
+                        <Modal
+                            className='d-block d-md-none'
+                            isOpen={jobModal}
+                            toggle={toggleJobModal}>
+                            <ModalBody>
+                                <Job id={currentJob._id} />
+                            </ModalBody>
+                            <ModalFooter className='p-1'>
+                                <Button size='sm' onClick={toggleJobModal}>
+                                    Close
+                                </Button>
+                            </ModalFooter>
+                        </Modal>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+};
+export default JobPage;
