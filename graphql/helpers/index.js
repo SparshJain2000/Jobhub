@@ -3,7 +3,9 @@ const JobType = require("../../models/jobType.model");
 const Job = require("../../models/job.model");
 const transformJob = async(job) => {
     try {
-        job = {...job, date: job.date.toISOString() };
+        if (job.date) job = {...job, date: job.date.toISOString() };
+        if (job.updatedAt)
+            job = {...job, updatedAt: job.updatedAt.toISOString() };
         return job;
     } catch (e) {
         console.log(e);
