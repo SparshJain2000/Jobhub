@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faChevronUp,
     faChevronDown,
-    faCross,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 // import styled, { keyframes } from "styled-components";
@@ -133,6 +132,7 @@ export default class QueryInput extends Component {
             delete query.location;
         if (query.type.length === 0) delete query.type;
         await this.props.setQuery(query);
+        this.props.setQueryModal(false);
         this.props.history.push({
             pathname: `/jobs/`,
             state: {
@@ -173,6 +173,14 @@ export default class QueryInput extends Component {
             "Manual Labor",
             "Appliance Repair",
         ];
+        const emojis = {
+            Painter: "🎨",
+            Electrician: "🔌",
+            Plumber: "🗜",
+            Cleaning: "🧹",
+            "Manual Labor": "🛠",
+            "Appliance Repair": "👨‍🔧",
+        };
         return (
             <Fragment>
                 <h4 className='text-align-center'> Filters </h4> <hr />
@@ -201,13 +209,12 @@ export default class QueryInput extends Component {
                                     ] ? (
                                         <Badge
                                             color='secondary'
-                                            className='selectable mx-1'>
-                                            {x}{" "}
-                                            <span
-                                                className='cross'
-                                                onClick={() =>
-                                                    this.removeFromType(x)
-                                                }>
+                                            className='selectable mx-1'
+                                            onClick={() =>
+                                                this.removeFromType(x)
+                                            }>
+                                            {`${emojis[x]} ${x}`}
+                                            <span className='cross ml-2'>
                                                 <FontAwesomeIcon
                                                     icon={faTrash}
                                                 />
@@ -218,79 +225,15 @@ export default class QueryInput extends Component {
                                             color='gray'
                                             className='mx-1 selectable'
                                             onClick={() => this.addToType(x)}>
-                                            {x}
+                                            {`${emojis[x]} ${x}`}
                                         </Badge>
                                     )}
                                 </>
                             ))}
-
-                        {/* <>
-                                <CustomInput
-                                    type='checkbox'
-                                    id='cleaning'
-                                    name='cleaning'
-                                    onChange={this.handleChange}
-                                    label='Cleaning'
-                                    defaultChecked={
-                                        this.state.query.type.cleaning
-                                    }
-                                />
-                                <CustomInput
-                                    onChange={this.handleChange}
-                                    type='checkbox'
-                                    id='carpeter'
-                                    name='carpeter'
-                                    defaultChecked={
-                                        this.state.query.type.carpenter
-                                    }
-                                    label='Carpeter'
-                                />
-                                <CustomInput
-                                    onChange={this.handleChange}
-                                    type='checkbox'
-                                    id='plumber'
-                                    defaultChecked={
-                                        this.state.query.type.plumber
-                                    }
-                                    name='plumber'
-                                    label='Plumber'
-                                />
-                                <CustomInput
-                                    onChange={this.handleChange}
-                                    type='checkbox'
-                                    id='appliance'
-                                    name='appliance'
-                                    defaultChecked={
-                                        this.state.query.type.appliance
-                                    }
-                                    label='Appliance Repair'
-                                />
-                                <CustomInput
-                                    onChange={this.handleChange}
-                                    type='checkbox'
-                                    id='manual'
-                                    name='manual'
-                                    defaultChecked={
-                                        this.state.query.type.manual
-                                    }
-                                    label='Manual Labor'
-                                />
-                                <CustomInput
-                                    onChange={this.handleChange}
-                                    type='checkbox'
-                                    id='painter'
-                                    name='painter'
-                                    defaultChecked={
-                                        this.state.query.type.painter
-                                    }
-                                    label='Painter'
-                                />
-                            </> */}
                     </FormGroup>
                     <hr />
                     <FormGroup>
                         <h6>
-                            {" "}
                             Location
                             <div
                                 name='location'
@@ -441,7 +384,7 @@ export default class QueryInput extends Component {
                             </>
                         )}
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup className='mb-0'>
                         <Button className='w-100' onClick={this.submitQuery}>
                             Apply filters
                         </Button>
