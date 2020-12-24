@@ -1,8 +1,8 @@
 import React from "react";
+import Loader from "../components/loader.component";
 import { useQuery } from "@apollo/client";
 import { GET_JOB } from "../graphql/query.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 const options = {
     weekday: "long",
@@ -15,8 +15,11 @@ const Job = ({ id }) => {
     const { loading, data, error } = useQuery(GET_JOB, {
         variables: { _id: id },
     });
-    if (loading) return <p className='w-100 text-align-center'>Loading ...</p>;
-    if (error) return <p className='w-100 text-align-center'>Error</p>;
+    if (loading) return <Loader />;
+    if (error) {
+        console.log(error);
+        return <p className='w-100 text-align-center'>Error</p>;
+    }
     if (data) job = data.job;
     return (
         job && (
@@ -48,6 +51,13 @@ const Job = ({ id }) => {
                     ))}
                     <br />
                     {job.description}
+                </p>
+                <hr />
+                <p>
+                    <h6>Contact Details</h6>
+                    {`Email : ${job.creator.email}`}
+                    <br />
+                    {`Phone Number : +91-${job.creator.contact}`}
                 </p>
             </div>
         )
