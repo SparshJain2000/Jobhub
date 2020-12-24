@@ -1,7 +1,7 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import JobCard from "../components/jobCard.component";
 import Job from "../components/job.component";
-// import json from "../assets/data.json";
+import Error from "../assets/error.svg";
 import "../styles/job.css";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,8 +26,15 @@ const Jobs = ({ currentJob, setCurrentJob, toggleJobModal, query }) => {
         variables: query,
     });
     if (loading) return <p className='w-100 text-align-center'>Loading ...</p>;
-    if (error) return <p className='w-100 text-align-center'>Error</p>;
-    if (data) console.log(data);
+    if (error) {
+        console.log(error);
+        return (
+            <div className='w-100 text-align-center p-3'>
+                <img src={Error} alt='' className='img-fluid m-5' />
+                <h5>Something went wrong ..Try again later</h5>
+            </div>
+        );
+    }
     return (
         <div className='row flex-row'>
             {data?.searchJobs && data?.searchJobs.length === 0 ? (
@@ -53,12 +60,15 @@ const JobPage = (props) => {
     const [jobModal, setJobModal] = useState(false);
     const [queryModal, setQueryModal] = useState(false);
     const width = useWindowSize();
-    console.log(width);
     const toggleJobModal = () => {
         width <= 767 && jobModal && setCurrentJob(null);
         setJobModal(!jobModal);
     };
     const toggleQueryModal = () => setQueryModal(!queryModal);
+    useEffect(() => {
+        console.log(props?.location?.state?.query);
+        if (props?.location?.state?.query) setQuery(props.location.state.query);
+    }, [props?.location?.state?.query]);
 
     return (
         <div className='w-100 d-flex flex-row mx-0 position-relative'>
@@ -87,6 +97,15 @@ const JobPage = (props) => {
                             setQueryModal={setQueryModal}
                         />
                     </ModalBody>
+                    <ModalFooter className='p-1'>
+                        <Button
+                            size='sm'
+                            color='secondary'
+                            className='w-100 mx-0 ml-2 mr-2'
+                            onClick={toggleQueryModal}>
+                            Close
+                        </Button>
+                    </ModalFooter>
                 </Modal>
             )}
             <div className='flex-grow-1 pt-3  position-relative'>
@@ -107,7 +126,7 @@ const JobPage = (props) => {
                 />
             </div>
             {currentJob && (
-                <div className='position-sticky d-none d-md-block col-3 p-3'>
+                <div className='position-sticky d-none d-md-block col-4 col-xl-3 p-3'>
                     <div className=' position-sticky'>
                         <Job id={currentJob._id} />
                     </div>
