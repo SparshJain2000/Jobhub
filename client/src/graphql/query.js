@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const GET_JOBS = gql`
+const GET_JOBS = gql `
     query {
         jobs {
             _id
@@ -19,7 +19,7 @@ const GET_JOBS = gql`
         }
     }
 `;
-const SEARCH_JOBS = gql`
+const SEARCH_JOBS = gql `
     query SearchJobs(
         $type: [String]
         $lastDate: String
@@ -55,7 +55,7 @@ const SEARCH_JOBS = gql`
     }
 `;
 
-const GET_JOB = gql`
+const GET_JOB = gql `
     query GetJob($_id: ID!) {
         job(id: $_id) {
             _id
@@ -75,7 +75,8 @@ const GET_JOB = gql`
             creator {
                 firstName
                 lastName
-                password
+                email
+                contact
             }
         }
     }
