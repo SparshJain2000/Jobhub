@@ -22,6 +22,7 @@ module.exports = buildSchema(`
                 _id:ID!
                 firstName:String!
                 lastName:String!
+                contact:Float!
                 email:String!
                 jobs:[Job!]
                 password:String!
