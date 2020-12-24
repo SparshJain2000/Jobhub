@@ -15,13 +15,7 @@ import {
     faChevronDown,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-// import styled, { keyframes } from "styled-components";
-// import { slideInDown } from "react-animations";
-
-// const slideInAnimation = keyframes`${slideInDown}`;
-// const slideInDiv = styled.div`
-//     animation: 1s ${slideInAnimation};
-// `;
+import { types, emojis } from "../assets/data";
 export default class QueryInput extends Component {
     constructor(props) {
         super(props);
@@ -29,10 +23,9 @@ export default class QueryInput extends Component {
             headers: { type: true },
             query: {
                 set: false,
-                type: {
-                    Painter: true,
-                    Cleaning: false,
-                },
+                type: {},
+                minPrice: 0,
+                maxPrice: 1000000,
             },
         };
         this.toggleHeaders = this.toggleHeaders.bind(this);
@@ -40,9 +33,9 @@ export default class QueryInput extends Component {
         this.submitQuery = this.submitQuery.bind(this);
         this.removeFromType = this.removeFromType.bind(this);
         this.addToType = this.addToType.bind(this);
+        this.resetField = this.resetField.bind(this);
     }
     componentDidMount() {
-        if (!this.state.set) console.log(this.props.query);
         let type = {};
         this.props.query?.type?.forEach((x) => (type[x] = true));
         this.setState({
@@ -164,23 +157,50 @@ export default class QueryInput extends Component {
             },
         });
     }
+    resetField(e) {
+        const field = e.target.id;
+        switch (field) {
+            case "price":
+                this.setState({
+                    query: {
+                        ...this.state.query,
+                        minPrice: 0,
+                        maxPrice: 1000000,
+                    },
+                });
+                break;
+            case "time":
+                this.setState({
+                    query: {
+                        ...this.state.query,
+                        startDate: "",
+                        lastDate: "",
+                    },
+                });
+                break;
+            case "type":
+                this.setState({
+                    query: {
+                        ...this.state.query,
+                        type: {},
+                    },
+                });
+                break;
+            case "location":
+                this.setState({
+                    query: {
+                        ...this.state.query,
+                        city: "",
+                        state: "",
+                        country: "",
+                    },
+                });
+                break;
+            default:
+                break;
+        }
+    }
     render() {
-        const types = [
-            "Painter",
-            "Electrician",
-            "Plumber",
-            "Cleaning",
-            "Manual Labor",
-            "Appliance Repair",
-        ];
-        const emojis = {
-            Painter: "🎨",
-            Electrician: "🔌",
-            Plumber: "🗜",
-            Cleaning: "🧹",
-            "Manual Labor": "🛠",
-            "Appliance Repair": "👨‍🔧",
-        };
         return (
             <Fragment>
                 <h4 className='text-align-center'> Filters </h4> <hr />
@@ -200,6 +220,15 @@ export default class QueryInput extends Component {
                                     }
                                 />
                             </div>
+                            {this.state.headers.type && (
+                                <Badge
+                                    color='gray'
+                                    className='clear float-right  mx-1'
+                                    id='type'
+                                    onClick={this.resetField}>
+                                    X
+                                </Badge>
+                            )}
                         </h6>
                         {this.state.headers.type &&
                             types.map((x) => (
@@ -214,8 +243,9 @@ export default class QueryInput extends Component {
                                                 this.removeFromType(x)
                                             }>
                                             {`${emojis[x]} ${x}`}
-                                            <span className='cross ml-2'>
+                                            <span className='cross ml-2 mr-1'>
                                                 <FontAwesomeIcon
+                                                    size='sm'
                                                     icon={faTrash}
                                                 />
                                             </span>
@@ -247,6 +277,15 @@ export default class QueryInput extends Component {
                                     }
                                 />
                             </div>
+                            {this.state.headers.location && (
+                                <Badge
+                                    color='gray'
+                                    className='clear float-right  mx-1'
+                                    id='location'
+                                    onClick={this.resetField}>
+                                    X
+                                </Badge>
+                            )}
                         </h6>
                         {this.state.headers.location && (
                             <div className='row'>
@@ -301,27 +340,40 @@ export default class QueryInput extends Component {
                                     }
                                 />
                             </div>
+                            {this.state.headers.time && (
+                                <Badge
+                                    color='gray'
+                                    className='clear float-right  mx-1'
+                                    id='time'
+                                    onClick={this.resetField}>
+                                    X
+                                </Badge>
+                            )}
                         </h6>
                         {this.state.headers.time && (
                             <>
-                                <Label for='startDate'>From</Label>
-                                <Input
-                                    type='datetime-local'
-                                    size='sm'
-                                    name='startDate'
-                                    value={this.state.query.startDate}
-                                    onChange={this.handleChange}
-                                    placeholder='date placeholder'
-                                />
-                                <Label for='lastDate'>To</Label>
-                                <Input
-                                    type='datetime-local'
-                                    size='sm'
-                                    name='lastDate'
-                                    onChange={this.handleChange}
-                                    value={this.state.query.lastDate}
-                                    placeholder='date placeholder'
-                                />
+                                <FormGroup>
+                                    <Label for='startDate'>From</Label>
+                                    <Input
+                                        type='datetime-local'
+                                        size='sm'
+                                        name='startDate'
+                                        value={this.state.query.startDate}
+                                        onChange={this.handleChange}
+                                        placeholder='date placeholder'
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for='lastDate'>To</Label>
+                                    <Input
+                                        type='datetime-local'
+                                        size='sm'
+                                        name='lastDate'
+                                        onChange={this.handleChange}
+                                        value={this.state.query.lastDate}
+                                        placeholder='date placeholder'
+                                    />
+                                </FormGroup>
                             </>
                         )}
                     </FormGroup>
@@ -342,6 +394,15 @@ export default class QueryInput extends Component {
                                     }
                                 />
                             </div>
+                            {this.state.headers.price && (
+                                <Badge
+                                    color='gray'
+                                    className='clear float-right  mx-1'
+                                    id='price'
+                                    onClick={this.resetField}>
+                                    X
+                                </Badge>
+                            )}
                         </h6>
                         {this.state.headers.price && (
                             <>
@@ -359,10 +420,11 @@ export default class QueryInput extends Component {
                                         name='minPrice'
                                         min='0'
                                         onChange={this.handleChange}
-                                        max='10000'
+                                        max='100000'
+                                        defaultValue='0'
                                         value={this.state.query.minPrice}
                                     />
-                                    <span>₹10000</span>
+                                    <span>₹100000</span>
                                 </div>
 
                                 <Label>
@@ -377,9 +439,10 @@ export default class QueryInput extends Component {
                                         min='0'
                                         value={this.state.query.maxPrice}
                                         onChange={this.handleChange}
-                                        max='10000'
+                                        defaultValue='100000'
+                                        max='100000'
                                     />
-                                    <span>₹10000</span>
+                                    <span>₹100000</span>
                                 </div>
                             </>
                         )}
