@@ -7,7 +7,7 @@
 }
 
 .card:hover {
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.3);
     transition: 0.4s ease-in-out;
 }
 
@@ -31,4 +31,51 @@
 
 .item {
     scroll-snap-align: center;
+}
+
+.badge-gray {
+    background-color: var(--gray) !important;
+    color: white !important;
+}
+
+.cross {
+    margin-left: 0.1rem;
+}
+
+.cross:hover {
+    cursor: pointer;
+    color: var(--red);
+}
+
+.selectable {
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+    font-size: 0.8rem !important;
+    margin-bottom: 0.35em;
+    border-radius: 99em !important;
+}
+
+.clear {
+    border-radius: 99em !important;
+    transition: 0.5s ease-in-out;
+}
+
+.clear:hover {
+    background-color: var(--secondary) !important;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+
+.clear::before {
+    opacity: 0;
+    left: -20px;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.clear:hover::before {
+    content: "CLEAR ";
+    opacity: 1;
+    left: 0px;
+    transition: 0.5s ease-in-out;
 }
