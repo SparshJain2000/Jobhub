@@ -14,7 +14,7 @@ import {
     DropdownItem,
     DropdownMenu,
 } from "reactstrap";
-
+import { types } from "../assets/data";
 const NavbarComponent = () => {
     const [error] = useState("");
     const [showError, setShowError] = useState(false);
@@ -84,21 +84,29 @@ const NavbarComponent = () => {
                                     caret
                                     className='display-inline px-0'></DropdownToggle>
                                 <DropdownMenu className='dropdown-menu-center'>
-                                    <DropdownItem>
-                                        <NavLink to='/event/national' exact>
-                                            National Events
-                                        </NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <NavLink to='/event/inhouse'>
-                                            Inhouse Events
-                                        </NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <NavLink to='/event/workshop'>
-                                            Workshops
-                                        </NavLink>
-                                    </DropdownItem>
+                                    {types.map((type) => (
+                                        <DropdownItem>
+                                            <NavLink
+                                                to={{
+                                                    pathname: "/jobs/",
+                                                    state: {
+                                                        query: {
+                                                            type: [
+                                                                type
+                                                                    .split(
+                                                                        " ",
+                                                                    )[0]
+                                                                    .toLowerCase(),
+                                                            ],
+                                                        },
+                                                    },
+                                                }}
+                                                className='job-link'
+                                                exact>
+                                                {type}
+                                            </NavLink>
+                                        </DropdownItem>
+                                    ))}
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </NavItem>
