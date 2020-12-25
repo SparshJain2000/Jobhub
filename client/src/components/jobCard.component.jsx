@@ -18,7 +18,13 @@ const JobCard = ({ currentJob, job, setCurrentJob, toggleJobModal }) => {
             <Card className='row flex-row h-100'>
                 <div className='col-12 p-3'>
                     <CardTitle tag='h5'>{job.title}</CardTitle>
-                    <CardText>{job.description.slice(0, 100)} ...</CardText>
+                    <CardText>
+                        {job.type.map((type) => (
+                            <strong>{type.title}</strong>
+                        ))}
+                        <br />
+                        {job.description.slice(0, 100)} ...
+                    </CardText>
                     <CardText>
                         {`${job.location.city}, ${job.location.state}, ${job.location.country}`}
                         <br />
