@@ -52,6 +52,10 @@ li.nav-item {
     color: var(--secondary) !important;
 }
 
+.job-link.active {
+    color: var(--white) !important;
+}
+
 .nav-item a:hover {
     color: var(--secondary) !important;
     text-decoration: none;
