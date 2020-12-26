@@ -52,19 +52,19 @@ export default class QueryInput extends Component {
             },
         });
     }
-    componentWillReceiveProps() {
+    componentWillReceiveProps(props) {
         let type = {};
-        this.props.query?.type?.forEach((x) => (type[x] = true));
+        props.query?.type?.forEach((x) => (type[x] = true));
         this.setState({
             query: {
                 ...this.state.query,
-                minPrice: this.props.query?.minPrice,
-                maxPrice: this.props.query?.maxPrice,
-                startDate: this.props.query?.startDate,
-                lastDate: this.props.query?.lastDate,
-                city: this.props.query?.location?.city,
-                state: this.props.query?.location?.state,
-                country: this.props.query?.location?.country,
+                minPrice: props.query?.minPrice,
+                maxPrice: props.query?.maxPrice,
+                startDate: props.query?.startDate,
+                lastDate: props.query?.lastDate,
+                city: props.query?.location?.city,
+                state: props.query?.location?.state,
+                country: props.query?.location?.country,
                 type,
             },
         });
@@ -232,7 +232,7 @@ export default class QueryInput extends Component {
                         </h6>
                         {this.state.headers.type &&
                             types.map((x) => (
-                                <>
+                                <span key={x}>
                                     {this.state.query.type[
                                         x.split(" ")[0].toLowerCase()
                                     ] ? (
@@ -258,7 +258,7 @@ export default class QueryInput extends Component {
                                             {`${emojis[x]} ${x}`}
                                         </Badge>
                                     )}
-                                </>
+                                </span>
                             ))}
                     </FormGroup>
                     <hr />
