@@ -20,7 +20,7 @@ const JobCard = ({ currentJob, job, setCurrentJob, toggleJobModal }) => {
                     <CardTitle tag='h5'>{job.title}</CardTitle>
                     <CardText>
                         {job.type.map((type) => (
-                            <strong>{type.title}</strong>
+                            <strong key={type.title}>{type.title}</strong>
                         ))}
                         <br />
                         {job.description.slice(0, 100)} ...

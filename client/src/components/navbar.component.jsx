@@ -33,7 +33,7 @@ const NavbarComponent = () => {
                 {error}
             </Alert>
             <Navbar
-                fixed
+                fixed='true'
                 expand='lg'
                 className='justify-content-between'
                 style={{ zIndex: "1" }}>
@@ -85,7 +85,7 @@ const NavbarComponent = () => {
                                     className='display-inline px-0'></DropdownToggle>
                                 <DropdownMenu className='dropdown-menu-center'>
                                     {types.map((type) => (
-                                        <DropdownItem>
+                                        <DropdownItem key={type}>
                                             <NavLink
                                                 to={{
                                                     pathname: "/jobs/",

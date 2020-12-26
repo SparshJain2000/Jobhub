@@ -33,12 +33,14 @@ const Home = () => {
                     </div>
                 </div>
                 <div className=' mt-auto-bg '>
-                    <h3 className='col-12 '>Jobs By Category</h3>
-                    <hr className='col-10 col-md-3 header-line' />
-                    <div className='home-types row'>
+                    <h3 className='col-12 text-align-center'>
+                        Jobs By Category
+                    </h3>
+                    <hr className='col-10 col-md-3 mx-auto header-line' />
+                    <div className='home-types row justify-content-center'>
                         {types.map((type) => (
                             <div
-                                className='col-6 col-sm-4 col-md-2 p-2'
+                                className='col-6 col-sm-4 col-md-3 col-lg-2 p-2'
                                 style={{ height: "100%" }}>
                                 <Link
                                     className='type-link'
@@ -59,7 +61,8 @@ const Home = () => {
                                         <img
                                             src={images[type]}
                                             alt=''
-                                            className='img-fluid '
+                                            className='img-fluid'
+                                            loading='lazy'
                                         />
                                     </div>
                                 </Link>
