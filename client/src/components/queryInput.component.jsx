@@ -238,12 +238,12 @@ export default class QueryInput extends Component {
                                     ] ? (
                                         <Badge
                                             color='secondary'
-                                            className='selectable mx-1'
+                                            className='selectable mx-1 px-2'
                                             onClick={() =>
                                                 this.removeFromType(x)
                                             }>
-                                            {`${emojis[x]} ${x}`}
-                                            <span className='cross ml-2 mr-1'>
+                                            {x}
+                                            <span className='cross ml-2'>
                                                 <FontAwesomeIcon
                                                     size='sm'
                                                     icon={faTrash}
@@ -253,9 +253,9 @@ export default class QueryInput extends Component {
                                     ) : (
                                         <Badge
                                             color='gray'
-                                            className='mx-1 selectable'
+                                            className='selectable mx-1 px-2'
                                             onClick={() => this.addToType(x)}>
-                                            {`${emojis[x]} ${x}`}
+                                            {x}
                                         </Badge>
                                     )}
                                 </span>
