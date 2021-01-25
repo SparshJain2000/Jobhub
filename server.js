@@ -1,6 +1,7 @@
 const bodyParser = require("body-parser"),
     express = require("express"),
     path = require("path"),
+    isAuth = require("./graphql/middleware/auth"),
     { graphqlHTTP } = require("express-graphql"),
     mongoose = require("mongoose"),
     gqlSchema = require("./graphql/schema/index"),
@@ -8,6 +9,7 @@ const bodyParser = require("body-parser"),
         dummyJobs,
         dummyEmployees,
         addLocationEmployees,
+        updateJobs,
     } = require("./controller/populateDummy"),
     gqlResolvers = require("./graphql/resolvers/index");
 
@@ -26,7 +28,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(bodyParser.json());
-// app.use(isAuth);
+app.use(isAuth);
 app.use(
     "/graphql",
     graphqlHTTP({
@@ -48,9 +50,10 @@ mongoose
         console.log("connected to MONGO 🎉");
     });
 
-app.get("/", async(req, res) => {
+app.get("/", async (req, res) => {
     // for (var i = 0; i < 9; i++) dummyEmployees();
     // addLocationEmployees();
+    // updateJobs();
     res.send("HELLO");
 });
 // app.use(express.static("frontend/build"));
