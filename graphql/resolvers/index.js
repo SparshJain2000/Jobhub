@@ -1,5 +1,6 @@
 const jobResolver = require("./job.resolver"),
     employerResolver = require("./employer.resolver"),
+    authResolver = require("./auth.resolver"),
     employeeResolver = require("./employee.resolver");
 
 // * define the structure of graphql
@@ -11,4 +12,5 @@ module.exports = {
     ...jobResolver,
     ...employerResolver,
     ...employeeResolver,
+    ...authResolver,
 };
