@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import JobCard from "../components/jobCard.component";
 import Job from "../components/job.component";
+import Loader from "../components/loader.component";
 import Error from "../assets/error.svg";
 import "../styles/job.css";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
@@ -25,7 +26,7 @@ const Jobs = ({ currentJob, setCurrentJob, toggleJobModal, query }) => {
     const { loading, data, error } = useQuery(SEARCH_JOBS, {
         variables: query,
     });
-    if (loading) return <p className='w-100 text-align-center'>Loading ...</p>;
+    if (loading) return <Loader />;
     if (error) {
         console.log(error);
         return (
@@ -57,7 +58,9 @@ const JobPage = (props) => {
     // const [jobs, setJobs] = useState(null);
     const [currentJob, setCurrentJob] = useState(null);
     const [query, setQuery] = useState(null);
+    const [errorMsg, setErrorMsg] = useState("");
     const [jobModal, setJobModal] = useState(false);
+    const [errorModal, setErrorModal] = useState(false);
     const [queryModal, setQueryModal] = useState(false);
     const width = useWindowSize();
     const toggleJobModal = () => {
@@ -65,6 +68,7 @@ const JobPage = (props) => {
         setJobModal(!jobModal);
     };
     const toggleQueryModal = () => setQueryModal(!queryModal);
+    const toggleErrorModal = () => setErrorModal(!errorModal);
     useEffect(() => {
         console.log(props?.location?.state?.query);
         if (props?.location?.state?.query) setQuery(props.location.state.query);
@@ -128,7 +132,13 @@ const JobPage = (props) => {
             {currentJob && (
                 <div className='position-sticky d-none d-md-block col-4 col-xl-3 p-3'>
                     <div className=' position-sticky'>
-                        <Job id={currentJob._id} />
+                        <Job
+                            id={currentJob._id}
+                            currentJob={currentJob}
+                            setCurrentJob={setCurrentJob}
+                            setErrorModal={setErrorModal}
+                            setErrorMsg={setErrorMsg}
+                        />
                     </div>
                     {width <= 767 && (
                         <Modal
@@ -136,7 +146,13 @@ const JobPage = (props) => {
                             isOpen={jobModal}
                             toggle={toggleJobModal}>
                             <ModalBody>
-                                <Job id={currentJob._id} />
+                                <Job
+                                    id={currentJob._id}
+                                    currentJob={currentJob}
+                                    setCurrentJob={setCurrentJob}
+                                    setErrorModal={setErrorModal}
+                                    setErrorMsg={setErrorMsg}
+                                />
                             </ModalBody>
                             <ModalFooter className='p-1'>
                                 <Button size='sm' onClick={toggleJobModal}>
@@ -147,6 +163,14 @@ const JobPage = (props) => {
                     )}
                 </div>
             )}
+            <Modal className='' isOpen={errorModal} toggle={toggleErrorModal}>
+                <ModalBody>{errorMsg}</ModalBody>
+                <ModalFooter className='p-1'>
+                    <Button size='sm' onClick={toggleErrorModal}>
+                        Close
+                    </Button>
+                </ModalFooter>
+            </Modal>
         </div>
     );
 };

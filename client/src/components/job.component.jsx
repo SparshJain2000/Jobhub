@@ -10,14 +10,21 @@ const options = {
     month: "long",
     day: "numeric",
 };
-const Job = ({ id }) => {
+const Job = ({ id, setCurrentJob, setErrorMsg, setErrorModal }) => {
     let job;
     const { loading, data, error } = useQuery(GET_JOB, {
         variables: { _id: id },
     });
     if (loading) return <Loader />;
     if (error) {
-        console.log(error);
+        const msg = error.networkError.result.errors[0].message;
+        setErrorModal(true);
+        setErrorMsg(
+            msg === "UNAUTHENTICATED"
+                ? "Please login first to see details"
+                : "Something went wrong. Try again later.",
+        );
+        setCurrentJob(null);
         return <p className='w-100 text-align-center'>Error</p>;
     }
     if (data) job = data.job;
