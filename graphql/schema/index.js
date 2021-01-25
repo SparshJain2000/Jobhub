@@ -74,6 +74,17 @@ module.exports = buildSchema(`
                 Latitude:Float
                 Longitude:Float
             }
+            input EmployerInput{
+                email:String!
+                password:String!
+                contact:String!
+            }
+            type AuthData{
+                userId:ID!
+                token:String!
+                tokenExpiration:Int!
+                isEmployer:Boolean!
+            }
             type RootQuery{
                 jobs: [Job!]!
                 job(id:ID!): Job!
@@ -81,9 +92,13 @@ module.exports = buildSchema(`
                 searchEmployees(params:EmployeeQuery!): [Employee!]
                 employers:[Employer!]!
                 employees:[Employee!]!
+                loginEmployer(email:String!,password:String!):AuthData
             }    
-            
+            type RootMutation{
+                createEmployer(userInput : EmployerInput): AuthData
+            }
             schema{
-                    query: RootQuery
-                }
+                query: RootQuery
+                mutation: RootMutation
+            }
         `);
