@@ -79,6 +79,10 @@ module.exports = buildSchema(`
                 password:String!
                 contact:String!
             }
+            input EmployeeInput{
+                email:String!
+                password:String!
+            }
             type AuthData{
                 userId:ID!
                 token:String!
@@ -93,8 +97,10 @@ module.exports = buildSchema(`
                 employers:[Employer!]!
                 employees:[Employee!]!
                 loginEmployer(email:String!,password:String!):AuthData
+                loginEmployee(email:String!,password:String!):AuthData
             }    
             type RootMutation{
+                createEmployee(userInput : EmployeeInput): AuthData
                 createEmployer(userInput : EmployerInput): AuthData
             }
             schema{

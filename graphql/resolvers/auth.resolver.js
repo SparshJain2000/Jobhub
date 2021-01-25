@@ -1,5 +1,6 @@
 const { pathToArray } = require("graphql/jsutils/Path");
 const Employer = require("../../models/employer.model"),
+    Employee = require("../../models/employee.model"),
     jwt = require("jsonwebtoken"),
     bcrypt = require("bcrypt");
 
@@ -48,6 +49,54 @@ module.exports = {
             userId: user.id,
             token,
             isEmployer: true,
+            tokenExpiration: 1,
+        };
+    },
+
+    createEmployee: async (args) => {
+        console.log(args.userInput);
+
+        try {
+            const user = await Employee.findOne({
+                email: args.userInput.email,
+            });
+            if (user) throw new Error("Employee already Exists");
+            const hashed = await bcrypt.hash(args.userInput.password, 12);
+            const newUser = new Employee({
+                ...args.userInput,
+                password: hashed,
+            });
+            const result = await newUser.save();
+            const token = jwt.sign(
+                { userId: result.id, email: result.email, isEmployer: false },
+                process.env.secret,
+                { expiresIn: "1h" },
+            );
+            return {
+                userId: result.id,
+                token,
+                tokenExpiration: 1,
+                isEmployer: false,
+            };
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    },
+    loginEmployee: async ({ email, password }) => {
+        const user = await Employee.findOne({ email });
+        if (!user) throw new Error("User not found");
+        const isEqual = await bcrypt.compare(password, user.password);
+        if (!isEqual) throw new Error("Incorrect Password");
+        const token = jwt.sign(
+            { userId: user.id, email: user.email, isEmployer: false },
+            process.env.secret,
+            { expiresIn: "1h" },
+        );
+        return {
+            userId: user.id,
+            token,
+            isEmployer: false,
             tokenExpiration: 1,
         };
     },
