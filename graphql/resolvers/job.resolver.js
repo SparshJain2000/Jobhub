@@ -5,7 +5,7 @@ const {
     projectionBuilder,
 } = require("../../controller/queryBuilder");
 module.exports = {
-    jobs: async() => {
+    jobs: async (args, req) => {
         try {
             const jobs = await Job.find()
                 .populate("creator")
@@ -18,7 +18,8 @@ module.exports = {
             throw e;
         }
     },
-    job: async({ id }) => {
+    job: async ({ id }, req) => {
+        if (!req.isAuth) throw Error("UNAUTHENTICATED");
         try {
             const job = await Job.findById(id)
                 .populate("creator")
@@ -30,16 +31,16 @@ module.exports = {
             throw e;
         }
     },
-    searchJobs: async({ params }, args, context) => {
+    searchJobs: async ({ params }, req, context) => {
         try {
             const projection = projectionBuilder(context);
             let jobs;
 
-            jobs = projection.creator ?
-                await Job.find(jobQuery(params), projection)
-                .populate("creator")
-                .lean() :
-                await Job.find(jobQuery(params), projection).lean();
+            jobs = projection.creator
+                ? await Job.find(jobQuery(params), projection)
+                      .populate("creator")
+                      .lean()
+                : await Job.find(jobQuery(params), projection).lean();
             return jobs.map((job) => transformJob(job));
         } catch (e) {
             console.log(e);
