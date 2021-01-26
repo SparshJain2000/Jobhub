@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
-import "../styles/navbar.css";
 import {
     Collapse,
     Navbar,

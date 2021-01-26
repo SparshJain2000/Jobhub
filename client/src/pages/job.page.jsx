@@ -3,7 +3,6 @@ import JobCard from "../components/jobCard.component";
 import Job from "../components/job.component";
 import Loader from "../components/loader.component";
 import Error from "../assets/error.svg";
-import "../styles/job.css";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH } from "@fortawesome/free-solid-svg-icons";

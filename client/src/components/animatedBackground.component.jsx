@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/bgPattern.css";
 const AnimatedBackground = () => {
     return (
         <div className='position-relative'>
