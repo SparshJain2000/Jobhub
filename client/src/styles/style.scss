@@ -1,0 +1,27 @@
+@import "./variables";
+@import "./job";
+@import "./loader";
+@import "./bgPattern";
+@import "./navbar";
+@import "./home";
+@import "./about";
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.position-sticky {
+    top: 0;
+}
+
+.bg-light-gray {
+    background-color: $light-gray;
+}
+
+.text-white {
+    color: $white !important;
+}
