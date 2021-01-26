@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import "./styles/index.css";
+import "./styles/style.css";
 import "./bootstrap.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
@@ -10,10 +10,10 @@ const client = new ApolloClient({
     cache: new InMemoryCache(),
 });
 ReactDOM.render(
-    <React.StrictMode>
+    <React.Fragment>
         <ApolloProvider client={client}>
             <App />
         </ApolloProvider>
-    </React.StrictMode>,
+    </React.Fragment>,
     document.getElementById("root"),
 );
