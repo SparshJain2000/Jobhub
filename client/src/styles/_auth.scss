@@ -1,0 +1,46 @@
+.auth {
+    margin: 4em;
+    margin-left: 10vw !important;
+    margin-right: 10vw !important;
+    .imgCard {
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+    }
+    .form {
+        border: 0.05em solid $gray;
+        border-radius: 0.5rem;
+        background-color: $highlight;
+        padding: 3em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: $text-alt;
+        h2,
+        h5 {
+            color: $light;
+        }
+        input {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+            &:focus {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: white;
+            }
+            &::placeholder {
+                color: $light-gray;
+            }
+        }
+        a {
+            color: $info;
+        }
+        @media only screen and (max-width: 767px) {
+            padding: 1.8em;
+        }
+    }
+    @media only screen and (max-width: 767px) {
+        margin: 3em;
+        margin-left: 7vw !important;
+        margin-right: 7vw !important;
+    }
+}
