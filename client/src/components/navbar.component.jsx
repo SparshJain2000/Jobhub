@@ -63,7 +63,9 @@ const NavbarComponent = () => {
                     isOpen={isOpen}
                     navbar
                     className='justify-content-lg-center'>
-                    <Nav className='row justify-content-center px-4' navbar>
+                    <Nav
+                        className='row justify-content-center pl-5 pr-3 w-100'
+                        navbar>
                         <NavItem className='m-1 my-2 my-lg-1'>
                             <NavLink to='/' exact>
                                 Home
@@ -132,6 +134,35 @@ const NavbarComponent = () => {
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
+                        </NavItem>
+                        <NavItem className='m-1 my-2 my-lg-1  ml-lg-auto '>
+                            <NavLink to='/sponsors'>
+                                Register as Professional
+                            </NavLink>
+                            <UncontrolledDropdown
+                                nav
+                                inNavbar
+                                className='display-inline px-0'>
+                                <DropdownToggle
+                                    nav
+                                    caret
+                                    className='display-inline px-0'></DropdownToggle>
+                                <DropdownMenu className='dropdown-menu-right'>
+                                    <DropdownItem>
+                                        <NavLink to='/sponsors' exact>
+                                            Login
+                                        </NavLink>
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <NavLink to='/sponsors/become'>
+                                            Signup
+                                        </NavLink>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                        </NavItem>
+                        <NavItem className='m-1 my-2 my-lg-1'>
+                            <NavLink to='/employer/login'>Login</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>
