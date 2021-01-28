@@ -21,7 +21,14 @@ const useWindowSize = () => {
     }, []);
     return size;
 };
-const Jobs = ({ currentJob, setCurrentJob, toggleJobModal, query }) => {
+const Jobs = ({
+    currentJob,
+    setCurrentJob,
+    toggleJobModal,
+    query,
+    setErrorModal,
+    setErrorMsg,
+}) => {
     const { loading, data, error } = useQuery(SEARCH_JOBS, {
         variables: query,
     });
@@ -47,6 +54,8 @@ const Jobs = ({ currentJob, setCurrentJob, toggleJobModal, query }) => {
                         currentJob={currentJob}
                         setCurrentJob={setCurrentJob}
                         toggleJobModal={toggleJobModal}
+                        setErrorModal={setErrorModal}
+                        setErrorMsg={setErrorMsg}
                     />
                 ))
             )}
@@ -126,6 +135,8 @@ const JobPage = (props) => {
                     setCurrentJob={setCurrentJob}
                     toggleJobModal={toggleJobModal}
                     query={query}
+                    setErrorModal={setErrorModal}
+                    setErrorMsg={setErrorMsg}
                 />
             </div>
             {currentJob && (

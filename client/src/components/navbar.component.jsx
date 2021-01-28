@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import {
@@ -14,7 +14,10 @@ import {
     DropdownMenu,
 } from "reactstrap";
 import { types } from "../assets/data";
+import AuthContext from "../context/auth.context";
+
 const NavbarComponent = () => {
+    const context = useContext(AuthContext);
     const [error] = useState("");
     const [showError, setShowError] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -162,7 +165,13 @@ const NavbarComponent = () => {
                             </UncontrolledDropdown>
                         </NavItem>
                         <NavItem className='m-1 my-2 my-lg-1'>
-                            <NavLink to='/employer/login'>Login</NavLink>
+                            {context.token ? (
+                                <span className='link' onClick={context.logout}>
+                                    Logout
+                                </span>
+                            ) : (
+                                <NavLink to='/employer/login'>Login</NavLink>
+                            )}
                         </NavItem>
                     </Nav>
                 </Collapse>

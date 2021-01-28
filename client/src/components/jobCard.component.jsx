@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, CardTitle, CardText } from "reactstrap";
+import AuthContext from "../context/auth.context";
 
-const JobCard = ({ currentJob, job, setCurrentJob, toggleJobModal }) => {
+const JobCard = ({
+    currentJob,
+    job,
+    setCurrentJob,
+    toggleJobModal,
+    setErrorModal,
+    setErrorMsg,
+}) => {
+    const context = useContext(AuthContext);
     const days = parseInt(
         (new Date() - new Date(job.updatedAt)) / (1000 * 60 * 60 * 24),
         10,
@@ -10,10 +19,15 @@ const JobCard = ({ currentJob, job, setCurrentJob, toggleJobModal }) => {
         <div
             className='col-12 p-2'
             onClick={() => {
-                setCurrentJob(
-                    currentJob && job._id === currentJob._id ? null : job,
-                );
-                toggleJobModal();
+                if (currentJob || context.token) {
+                    setCurrentJob(
+                        currentJob && job._id === currentJob._id ? null : job,
+                    );
+                    toggleJobModal();
+                } else {
+                    setErrorModal(true);
+                    setErrorMsg("Please login first to see details");
+                }
             }}>
             <Card className='row flex-row h-100'>
                 <div className='col-12 p-3'>
