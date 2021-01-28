@@ -92,4 +92,20 @@ const LOGIN_EMPLOYER = gql`
         }
     }
 `;
-export { GET_JOBS, GET_JOB, SEARCH_JOBS, LOGIN_EMPLOYER };
+const SIGNUP_EMPLOYER = gql`
+    mutation SignupEmployer(
+        $email: String!
+        $password: String!
+        $contact: String!
+    ) {
+        createEmployer(
+            userInput: { email: $email, password: $password, contact: $contact }
+        ) {
+            userId
+            token
+            tokenExpiration
+            isEmployer
+        }
+    }
+`;
+export { GET_JOBS, GET_JOB, SEARCH_JOBS, LOGIN_EMPLOYER, SIGNUP_EMPLOYER };
