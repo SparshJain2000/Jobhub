@@ -10,11 +10,12 @@
     }
     .dropdown-item {
         color: $white !important;
+        text-align: center;
     }
     .dropdown-item:focus,
     .dropdown-item:active,
     .dropdown-item:hover {
-        color: $secondary !important;
+        color: $primary !important;
         text-decoration: none;
         background-color: transparent !important;
     }
@@ -68,8 +69,10 @@ li.nav-item {
         -o-transform: translate(-50%, 0);
         transform: translate(-50%, 0);
     }
+    .dropdown-item {
+        text-align: left !important;
+    }
 }
-
 
 /* toggler minus */
 
@@ -112,9 +115,7 @@ li.nav-item {
     }
 }
 
-
 /* toggler */
-
 
 /* 
 .navbar-toggler:focus,

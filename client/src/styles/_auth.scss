@@ -1,7 +1,7 @@
 .auth {
     margin: 4em;
-    margin-left: 10vw !important;
-    margin-right: 10vw !important;
+    margin-left: 12vw !important;
+    margin-right: 12vw !important;
     .imgCard {
         border-top-left-radius: 0.25rem;
         border-bottom-left-radius: 0.25rem;
@@ -11,12 +11,16 @@
         border-radius: 0.5rem;
         background-color: $highlight;
         padding: 3em;
+        height: fit-content;
+        margin-top: auto;
+        margin-bottom: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
         color: $text-alt;
         h2,
-        h5 {
+        h5,
+        h6 {
             color: $light;
         }
         input {
@@ -32,10 +36,20 @@
             }
         }
         a {
-            color: $info;
+            color: $secondary;
         }
         @media only screen and (max-width: 767px) {
             padding: 1.8em;
+        }
+        button {
+            @media only screen and (max-width: 767px) {
+                width: 100%;
+            }
+        }
+        .input-group-text {
+            color: $white;
+            background-color: $secondary;
+            border: 0px;
         }
     }
     @media only screen and (max-width: 767px) {

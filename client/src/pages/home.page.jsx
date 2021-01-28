@@ -32,14 +32,14 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='mt-auto-bg'>
-                    <h3 className='col-12 text-align-center'>
+                    <h3 className='col-12 text-align-center text-secondary'>
                         Jobs By Category
                     </h3>
                     <hr className='col-10 col-md-3 mx-auto header-line' />
-                    <div className='home-types row justify-content-center'>
+                    <div className='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-12 home-types row justify-content-center mx-auto'>
                         {types.map((type) => (
                             <div
-                                className='col-6 col-sm-4 col-md-3 col-lg-2 p-2'
+                                className='col-6  col-md-4 col-xl-2 p-2'
                                 style={{ height: "100%" }}>
                                 <Link
                                     className='type-link'

@@ -30,3 +30,16 @@
 .text-white {
     color: $white !important;
 }
+.link {
+    cursor: pointer;
+    &:hover {
+        color: $secondary;
+    }
+}
+a {
+    color: $secondary;
+
+    &:hover {
+        color: $secondary;
+    }
+}
