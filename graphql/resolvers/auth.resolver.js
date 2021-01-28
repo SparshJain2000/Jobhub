@@ -37,9 +37,9 @@ module.exports = {
     },
     loginEmployer: async ({ email, password }) => {
         const user = await Employer.findOne({ email });
-        if (!user) throw new Error("User not found");
+        if (!user) throw new Error("INVALID_EMAIL");
         const isEqual = await bcrypt.compare(password, user.password);
-        if (!isEqual) throw new Error("Incorrect Password");
+        if (!isEqual) throw new Error("INVALID_PASSWORD");
         const token = jwt.sign(
             { userId: user.id, email: user.email, isEmployer: true },
             process.env.secret,
@@ -85,9 +85,9 @@ module.exports = {
     },
     loginEmployee: async ({ email, password }) => {
         const user = await Employee.findOne({ email });
-        if (!user) throw new Error("User not found");
+        if (!user) throw new Error("INVALID_EMAIL");
         const isEqual = await bcrypt.compare(password, user.password);
-        if (!isEqual) throw new Error("Incorrect Password");
+        if (!isEqual) throw new Error("INVALID_PASSWORD");
         const token = jwt.sign(
             { userId: user.id, email: user.email, isEmployer: false },
             process.env.secret,

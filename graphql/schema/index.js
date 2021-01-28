@@ -96,12 +96,13 @@ module.exports = buildSchema(`
                 searchEmployees(params:EmployeeQuery!): [Employee!]
                 employers:[Employer!]!
                 employees:[Employee!]!
-                loginEmployer(email:String!,password:String!):AuthData
-                loginEmployee(email:String!,password:String!):AuthData
+                
             }    
             type RootMutation{
                 createEmployee(userInput : EmployeeInput): AuthData
                 createEmployer(userInput : EmployerInput): AuthData
+                loginEmployer(email:String!,password:String!):AuthData
+                loginEmployee(email:String!,password:String!):AuthData
             }
             schema{
                 query: RootQuery
