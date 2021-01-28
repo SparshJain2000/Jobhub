@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/home.page";
 import Job from "./pages/job.page";
-import EmployerLogin from "./pages/employerLogin.page";
-import EmployerSignup from "./pages/employerSignup.page";
+import AuthEmployer from "./pages/authEmployer.page";
 import About from "./pages/about.page";
 import Navbar from "./components/navbar.component";
 import Loading from "./components/loader.component";
@@ -69,12 +68,12 @@ class App extends Component {
                                 <Route
                                     path='/employer/login'
                                     exact
-                                    component={EmployerLogin}
+                                    component={AuthEmployer}
                                 />
                                 <Route
                                     path='/employer/signup'
                                     exact
-                                    component={EmployerSignup}
+                                    component={AuthEmployer}
                                 />
                             </Switch>
                         </main>

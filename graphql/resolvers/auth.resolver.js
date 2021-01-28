@@ -12,7 +12,7 @@ module.exports = {
             const user = await Employer.findOne({
                 email: args.userInput.email,
             });
-            if (user) throw new Error("Employer already Exists");
+            if (user) throw new Error("EMAIL_EXISTS");
             const hashed = await bcrypt.hash(args.userInput.password, 12);
             const newUser = new Employer({
                 ...args.userInput,
@@ -60,7 +60,7 @@ module.exports = {
             const user = await Employee.findOne({
                 email: args.userInput.email,
             });
-            if (user) throw new Error("Employee already Exists");
+            if (user) throw new Error("EMAIL_EXISTS");
             const hashed = await bcrypt.hash(args.userInput.password, 12);
             const newUser = new Employee({
                 ...args.userInput,
