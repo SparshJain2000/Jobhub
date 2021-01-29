@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/home.page";
 import Job from "./pages/job.page";
 import AuthEmployer from "./pages/authEmployer.page";
+import AuthWorker from "./pages/authWorker.page";
 import About from "./pages/about.page";
 import Navbar from "./components/navbar.component";
 import Footer from "./components/footer.component";
@@ -66,6 +67,9 @@ class App extends Component {
                                 {this.state.token && (
                                     <Redirect from='/employer' to='/' />
                                 )}
+                                {this.state.token && !this.state.isEmployer && (
+                                    <Redirect from='/professional' to='/' />
+                                )}
                                 <Route
                                     path='/employer/login'
                                     exact
@@ -75,6 +79,16 @@ class App extends Component {
                                     path='/employer/signup'
                                     exact
                                     component={AuthEmployer}
+                                />
+                                <Route
+                                    path='/professional/login'
+                                    exact
+                                    component={AuthWorker}
+                                />
+                                <Route
+                                    path='/professional/signup'
+                                    exact
+                                    component={AuthWorker}
                                 />
                             </Switch>
                         </main>
