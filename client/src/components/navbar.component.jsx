@@ -138,33 +138,42 @@ const NavbarComponent = () => {
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </NavItem>
-                        <NavItem className='m-1 my-2 my-lg-1  ml-lg-auto '>
-                            <NavLink to='/sponsors'>
-                                Register as Professional
-                            </NavLink>
-                            <UncontrolledDropdown
-                                nav
-                                inNavbar
-                                className='display-inline px-0'>
-                                <DropdownToggle
+                        {(!context.token || context.isEmployer) && (
+                            <NavItem className='m-1 my-2 my-lg-1  ml-lg-auto '>
+                                <NavLink to='/professional/login'>
+                                    Register as Professional
+                                </NavLink>
+                                <UncontrolledDropdown
                                     nav
-                                    caret
-                                    className='display-inline px-0'></DropdownToggle>
-                                <DropdownMenu className='dropdown-menu-right'>
-                                    <DropdownItem>
-                                        <NavLink to='/sponsors' exact>
-                                            Login
-                                        </NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <NavLink to='/sponsors/become'>
-                                            Signup
-                                        </NavLink>
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </NavItem>
-                        <NavItem className='m-1 my-2 my-lg-1'>
+                                    inNavbar
+                                    className='display-inline px-0'>
+                                    <DropdownToggle
+                                        nav
+                                        caret
+                                        className='display-inline px-0'></DropdownToggle>
+                                    <DropdownMenu className='dropdown-menu-right'>
+                                        <DropdownItem>
+                                            <NavLink
+                                                to='/professional/login'
+                                                exact>
+                                                Login
+                                            </NavLink>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <NavLink to='/professional/signup'>
+                                                Signup
+                                            </NavLink>
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+                            </NavItem>
+                        )}
+                        <NavItem
+                            className={`m-1 my-2 my-lg-1 ${
+                                context.token && !context.isEmployer
+                                    ? "ml-lg-auto"
+                                    : ""
+                            }`}>
                             {context.token ? (
                                 <span className='link' onClick={context.logout}>
                                     Logout

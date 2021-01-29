@@ -3,6 +3,7 @@
 @import "./loader";
 @import "./bgPattern";
 @import "./navbar";
+@import "./footer";
 @import "./home";
 @import "./about";
 @import "./auth";
@@ -41,5 +42,13 @@ a {
 
     &:hover {
         color: $secondary;
+    }
+}
+.btn.btn-primary {
+    background-color: $primary;
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: rgba($primary, 0.9) !important;
     }
 }

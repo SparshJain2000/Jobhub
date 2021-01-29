@@ -32,7 +32,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='mt-auto-bg'>
-                    <h3 className='col-12 text-align-center text-secondary'>
+                    <h3 className='col-12 text-align-center '>
                         Jobs By Category
                     </h3>
                     <hr className='col-10 col-md-3 mx-auto header-line' />

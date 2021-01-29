@@ -15,7 +15,7 @@ import {
     faChevronDown,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { types, emojis } from "../assets/data";
+import { types } from "../assets/data";
 export default class QueryInput extends Component {
     constructor(props) {
         super(props);
@@ -237,7 +237,7 @@ export default class QueryInput extends Component {
                                         x.split(" ")[0].toLowerCase()
                                     ] ? (
                                         <Badge
-                                            color='secondary'
+                                            color='primary'
                                             className='selectable mx-1 px-2'
                                             onClick={() =>
                                                 this.removeFromType(x)
@@ -448,7 +448,10 @@ export default class QueryInput extends Component {
                         )}
                     </FormGroup>
                     <FormGroup className='mb-0'>
-                        <Button className='w-100' onClick={this.submitQuery}>
+                        <Button
+                            className='w-100'
+                            color='primary'
+                            onClick={this.submitQuery}>
                             Apply filters
                         </Button>
                     </FormGroup>
