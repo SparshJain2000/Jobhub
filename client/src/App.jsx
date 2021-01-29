@@ -4,6 +4,7 @@ import Job from "./pages/job.page";
 import AuthEmployer from "./pages/authEmployer.page";
 import About from "./pages/about.page";
 import Navbar from "./components/navbar.component";
+import Footer from "./components/footer.component";
 import Loading from "./components/loader.component";
 import { Component } from "react";
 import AuthContext from "./context/auth.context";
@@ -78,6 +79,7 @@ class App extends Component {
                             </Switch>
                         </main>
                     )}
+                    <Footer />
                 </AuthContext.Provider>
             </BrowserRouter>
         );
