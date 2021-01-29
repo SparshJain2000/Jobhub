@@ -15,37 +15,62 @@ import {
     Modal,
     ModalBody,
     ModalFooter,
+    FormFeedback,
 } from "reactstrap";
-import { SIGNUP_EMPLOYER, LOGIN_EMPLOYER } from "../graphql/query";
+import { SIGNUP_EMPLOYER, LOGIN_EMPLOYER } from "../graphql/mutation";
 import { useMutation } from "@apollo/client";
-
 import AuthContext from "../context/auth.context";
-
+const validateEmail = (email) => {
+    const re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return re.test(email);
+};
+const validatePassword = (pass) => pass.length >= 8;
+const validateContact = (contact) => {
+    const re = /^\d{10}$/;
+    return re.test(contact);
+};
+const validateField = (field, value) => {
+    switch (field) {
+        case "email":
+            return validateEmail(value);
+        case "password":
+            return validatePassword(value);
+        case "contact":
+            return validateContact(value);
+        default:
+            return false;
+    }
+};
 const AuthEmployer = () => {
     const location = useLocation();
     const history = useHistory();
-
     const context = useContext(AuthContext);
-    const [isLogin, setIsLogin] = useState(
-        location.pathname.split("/")[2] === "login",
-    );
-    history.listen((location, action) => {
-        console.log(
-            `The current URL is ${location.pathname}${location.search}${location.hash}`,
-        );
-        console.log(`The last navigation action was ${action}`);
 
-        setIsLogin(location.pathname.split("/")[2] === "login");
-    });
     const [errorMsg, setErrorMsg] = useState("");
     const [errorModal, setErrorModal] = useState(false);
     const [credentials, setCredentials] = useState({});
+    const [valid, setValid] = useState({
+        email: true,
+        password: true,
+        contact: true,
+    });
+    const [isLogin, setIsLogin] = useState(
+        location.pathname.split("/")[2] === "login",
+    );
+    history.listen((location, action) =>
+        setIsLogin(location.pathname.split("/")[2] === "login"),
+    );
     const toggleErrorModal = () => setErrorModal(!errorModal);
-    const handleChange = (e) =>
+    const handleChange = async (e) => {
         setCredentials({
             ...credentials,
             [e.target.name]: e.target.value,
         });
+        await setValid({
+            ...valid,
+            [e.target.name]: validateField(e.target.name, e.target.value),
+        });
+    };
     const [login] = useMutation(LOGIN_EMPLOYER, {
         variables: credentials,
     });
@@ -100,8 +125,9 @@ const AuthEmployer = () => {
                             placeholder='Email'
                             onChange={handleChange}
                             required
-                            invalid={credentials?.email === ""}
+                            invalid={credentials?.email === "" || !valid.email}
                         />
+                        <FormFeedback>Please enter a valid E-mail</FormFeedback>
                     </FormGroup>
                     <FormGroup>
                         <Input
@@ -111,8 +137,13 @@ const AuthEmployer = () => {
                             placeholder='Password'
                             onChange={handleChange}
                             required
-                            invalid={credentials?.password === ""}
+                            invalid={
+                                credentials?.password === "" || !valid.password
+                            }
                         />
+                        <FormFeedback>
+                            Password length should be at least 8
+                        </FormFeedback>
                     </FormGroup>
                     {!isLogin && (
                         <FormGroup>
@@ -127,8 +158,14 @@ const AuthEmployer = () => {
                                     placeholder='Contact Number'
                                     onChange={handleChange}
                                     required
-                                    invalid={credentials?.contact === ""}
+                                    invalid={
+                                        credentials?.contact === "" ||
+                                        !valid.contact
+                                    }
                                 />
+                                <FormFeedback>
+                                    Please enter a valid contact number
+                                </FormFeedback>
                             </InputGroup>
                         </FormGroup>
                     )}
@@ -142,7 +179,17 @@ const AuthEmployer = () => {
                                     </Link>
                                 </div>
                                 <div className='col-12 col-md-4 text-align-end px-0 my-auto'>
-                                    <Button color='secondary'>Login</Button>
+                                    <Button
+                                        color='secondary'
+                                        disabled={
+                                            !(
+                                                valid.email &&
+                                                valid.password &&
+                                                (isLogin ? true : valid.contact)
+                                            )
+                                        }>
+                                        Login
+                                    </Button>
                                 </div>
                             </>
                         ) : (
@@ -152,7 +199,17 @@ const AuthEmployer = () => {
                                     <Link to='/employer/login'>Login</Link>
                                 </h5>
                                 <div className='col-12 col-md-4 text-align-end px-0 my-auto'>
-                                    <Button color='secondary'>Sign Up</Button>
+                                    <Button
+                                        color='secondary'
+                                        disabled={
+                                            !(
+                                                valid.email &&
+                                                valid.password &&
+                                                (isLogin ? true : valid.contact)
+                                            )
+                                        }>
+                                        Sign Up
+                                    </Button>
                                 </div>
                             </>
                         )}
