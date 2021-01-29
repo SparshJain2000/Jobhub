@@ -82,30 +82,4 @@ const GET_JOB = gql`
     }
 `;
 
-const LOGIN_EMPLOYER = gql`
-    mutation LoginEmployer($email: String!, $password: String!) {
-        loginEmployer(email: $email, password: $password) {
-            userId
-            token
-            tokenExpiration
-            isEmployer
-        }
-    }
-`;
-const SIGNUP_EMPLOYER = gql`
-    mutation SignupEmployer(
-        $email: String!
-        $password: String!
-        $contact: String!
-    ) {
-        createEmployer(
-            userInput: { email: $email, password: $password, contact: $contact }
-        ) {
-            userId
-            token
-            tokenExpiration
-            isEmployer
-        }
-    }
-`;
-export { GET_JOBS, GET_JOB, SEARCH_JOBS, LOGIN_EMPLOYER, SIGNUP_EMPLOYER };
+export { GET_JOBS, GET_JOB, SEARCH_JOBS };
