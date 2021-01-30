@@ -7,6 +7,14 @@
 @import "./home";
 @import "./about";
 @import "./auth";
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main {
+    flex: 1;
+}
 .row {
     margin-left: 0px !important;
     margin-right: 0px !important;
@@ -34,7 +42,7 @@
 .link {
     cursor: pointer;
     &:hover {
-        color: $secondary;
+        color: $secondary !important;
     }
 }
 a {
@@ -51,4 +59,7 @@ a {
     &:focus {
         background-color: rgba($primary, 0.9) !important;
     }
+}
+.myClassName__control {
+    height: 40px;
 }

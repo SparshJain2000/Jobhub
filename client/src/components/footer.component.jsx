@@ -6,26 +6,34 @@ import {
     faGithub,
     faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 
 const Footer = () => {
     return (
-        <footer>
+        <footer className='row'>
             <div className='col-12 col-md-8'>
                 <h5>
-                    <img
-                        src={logo}
-                        alt=''
-                        className='img-fluid mr-1'
-                        style={{ maxHeight: "30px" }}
-                    />
-                    JobHub
+                    <Link to='/' className='link text-white '>
+                        <img
+                            src={logo}
+                            alt=''
+                            className='img-fluid mr-1'
+                            style={{ maxHeight: "30px" }}
+                        />
+                        JobHub
+                    </Link>
                 </h5>
                 <hr className='col-10 col-md-3 header-line pl-0 m-0 my-1' />
-                Platform for connecting Professionals and employers
-                <br />
-                Contact : jainsparsh0801@gmail.com, (+91) 987537465
+                Platform for connecting Professionals and Employers
+                <div style={{ color: "var(--gray)" }}>
+                    Contact : jainsparsh0801@gmail.com, (+91) 987537465
+                </div>
             </div>
+            <hr
+                className='col-12 px-0 d-block d-md-none'
+                style={{ backgroundColor: "var(--light-gray)" }}
+            />
             <div className='col-12 col-md-4'>
                 <h5 className='text-align-center'>Follow us</h5>
                 <div class='row '>
