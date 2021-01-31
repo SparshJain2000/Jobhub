@@ -81,5 +81,64 @@ const GET_JOB = gql`
         }
     }
 `;
-
-export { GET_JOBS, GET_JOB, SEARCH_JOBS };
+const SEARCH_WORKERS = gql`
+    query SearchEmployees(
+        $skills: String
+        $rating: Float
+        $experience: Float
+        $location: InputLocation
+    ) {
+        searchEmployees(
+            params: {
+                skills: $skills
+                rating: $rating
+                experience: $experience
+                location: $location
+            }
+        ) {
+            _id
+            firstName
+            lastName
+            email
+            rating
+            experience
+            location {
+                city
+                state
+                country
+            }
+            reviews {
+                author {
+                    username
+                    id
+                }
+                comment
+                rating
+                id
+            }
+            skills {
+                title
+            }
+        }
+    }
+`;
+const ALL_EMPLOYEES = gql`
+    query {
+        Employees {
+            firstName
+            lastName
+            email
+            rating
+            experience
+            location {
+                city
+                state
+                country
+            }
+            skills {
+                title
+            }
+        }
+    }
+`;
+export { GET_JOBS, GET_JOB, SEARCH_JOBS, SEARCH_WORKERS, ALL_EMPLOYEES };
