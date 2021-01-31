@@ -23,6 +23,7 @@
         "graphql-fields": "^2.0.3",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.10.13",
+        "react-select": "^4.0.2",
         "styled-components": "^5.2.1"
     },
     "devDependencies": {
