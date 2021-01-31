@@ -115,28 +115,7 @@ const NavbarComponent = () => {
                             </UncontrolledDropdown>
                         </NavItem>
                         <NavItem className='m-1 my-2 my-lg-1'>
-                            <NavLink to='/sponsors'>Sponsors</NavLink>
-                            <UncontrolledDropdown
-                                nav
-                                inNavbar
-                                className='display-inline px-0'>
-                                <DropdownToggle
-                                    nav
-                                    caret
-                                    className='display-inline px-0'></DropdownToggle>
-                                <DropdownMenu className='dropdown-menu-center'>
-                                    <DropdownItem>
-                                        <NavLink to='/sponsors' exact>
-                                            Sponsors
-                                        </NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <NavLink to='/sponsors/become'>
-                                            Become a sponsor
-                                        </NavLink>
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
+                            <NavLink to='/professionals'>Professionals</NavLink>
                         </NavItem>
                         {(!context.token || context.isEmployer) && (
                             <NavItem className='m-1 my-2 my-lg-1  ml-lg-auto '>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/home.page";
 import Job from "./pages/job.page";
+import Worker from "./pages/worker.page";
 import AuthEmployer from "./pages/authEmployer.page";
 import AuthWorker from "./pages/authWorker.page";
 import About from "./pages/about.page";
@@ -63,6 +64,11 @@ class App extends Component {
                             <Switch>
                                 <Route path='/' exact component={Home} />
                                 <Route path='/jobs' exact component={Job} />
+                                <Route
+                                    path='/professionals'
+                                    exact
+                                    component={Worker}
+                                />
                                 <Route path='/about' exact component={About} />
                                 {this.state.token && (
                                     <Redirect from='/employer' to='/' />
