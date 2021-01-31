@@ -36,8 +36,8 @@ const Footer = () => {
             />
             <div className='col-12 col-md-4'>
                 <h5 className='text-align-center'>Follow us</h5>
-                <div class='row '>
-                    <div class='row align-content-center text-center justify-content-center col-12 mx-auto my-1 icons'>
+                <div className='row '>
+                    <div className='row align-content-center text-center justify-content-center col-12 mx-auto my-1 icons'>
                         <a
                             href='https://www.facebook.com/sparsh.jain.9699 '
                             className='social'>

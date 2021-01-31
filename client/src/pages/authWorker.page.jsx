@@ -106,7 +106,7 @@ const AuthWorker = () => {
                 </div>
             </div>
             <div className='col-12 col-md-7 col-lg-6 form'>
-                <h2>{isLogin ? "Login" : "Signup"} to JobHub</h2>
+                <h2>{isLogin ? "Login to" : "Register at"} JobHub</h2>
                 <hr className='w-75 ml-0 header-line mt-1' />
 
                 <Form onSubmit={submit}>
@@ -160,7 +160,7 @@ const AuthWorker = () => {
                         ) : (
                             <>
                                 <h5 className='col-12 col-md-8 py-2 pl-0'>
-                                    Already a customer ?{" "}
+                                    Already registered ?{" "}
                                     <Link to='/professional/login'>Login</Link>
                                 </h5>
                                 <div className='col-12 col-md-4 text-align-end px-0 my-auto'>

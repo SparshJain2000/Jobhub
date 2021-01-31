@@ -38,7 +38,7 @@ const Jobs = ({
         return (
             <div className='w-100 text-align-center p-3'>
                 <img src={Error} alt='' className='img-fluid m-5' />
-                <h5>Something went wrong ..Try again later</h5>
+                <h5>Something went wrong. Try again later</h5>
             </div>
         );
     }
