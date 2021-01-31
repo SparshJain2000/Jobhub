@@ -14,6 +14,18 @@ module.exports = buildSchema(`
                 createdAt:String!
                 updatedAt:String!
                 completedJobs:[Job!]
+                reviews:[Review]
+            }
+            type Review{
+                id:ID!
+                comment:String
+                rating:Int
+                author:User
+                createdAt:String!
+            }
+            type User{
+                id:ID
+                username:String
             }
             type JobType{
                 title:String!
