@@ -8,7 +8,9 @@ const bodyParser = require("body-parser"),
     {
         dummyJobs,
         dummyEmployees,
+        dummyReviews,
         addLocationEmployees,
+        updateEmployees,
         updateJobs,
     } = require("./controller/populateDummy"),
     gqlResolvers = require("./graphql/resolvers/index");
@@ -49,16 +51,16 @@ mongoose
     .then(() => {
         console.log("connected to MONGO 🎉");
     });
-
+app.get("/populate", async (req, res) => {
+    // const z = updateEmployees();
+    res.send("DONE");
+});
 app.get("/", async (req, res) => {
-    // for (var i = 0; i < 9; i++) dummyEmployees();
-    // addLocationEmployees();
-    // updateJobs();
     res.send("HELLO");
 });
-// app.use(express.static("frontend/build"));
+// app.use(express.static("client/build"));
 // app.use("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "frontend/build/index.html"));
+//     res.sendFile(path.join(__dirname, "client/build/index.html"));
 // });
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
