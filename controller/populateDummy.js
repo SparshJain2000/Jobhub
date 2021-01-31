@@ -1,15 +1,36 @@
 const casual = require("casual");
 const Employer = require("../models/employer.model"),
     Employee = require("../models/employee.model"),
+    Review = require("../models/review.model"),
     Job = require("../models/job.model");
-const dummyJobs = async() => {
+casual.define("reviewList", function () {
+    const reviews = [
+        { id: "6016f0a4f81135491806520d", rating: 2 },
+        { id: "6016f0a4f81135491806520c", rating: 4 },
+        { id: "6016f0a4f81135491806520f", rating: 1 },
+        { id: "6016f0a4f81135491806520e", rating: 2 },
+        { id: "6016f0a4f811354918065210", rating: 3 },
+        { id: "6016f0a4f811354918065211", rating: 4 },
+        { id: "6016f0a4f811354918065212", rating: 2 },
+        { id: "6016f0a4f811354918065213", rating: 0 },
+        { id: "6016f0a4f811354918065214", rating: 5 },
+    ];
+    const n = reviews.length;
+    const nos = casual.integer((from = 1), (to = n - 2));
+    const start = casual.integer((from = 0), (to = n - 1));
+    const end = casual.integer((from = start + 1), (to = start + nos));
+    return reviews.slice(start, end);
+});
+
+const dummyJobs = async () => {
     for (let i = 0; i < 10; i++) {
         try {
             let jobObject = new Job({
                 title: casual.title,
                 description: casual.description,
                 type: [
-                    casual.random_element([{
+                    casual.random_element([
+                        {
                             typeId: "5fd1144738dd6930a82bf241",
                             title: "Cleaning",
                         },
@@ -52,16 +73,17 @@ const dummyJobs = async() => {
         }
     }
 };
-const dummyEmployees = async() => {
+const dummyEmployees = async () => {
     let EmployeeObject = new Employee({
         firstName: casual.first_name,
         lastName: casual.last_name,
         email: casual.email,
         password: casual.password,
-        experience: casual.integer((from = 0), (to = 10)),
+        experience: casual.integer((from = 0), (to = 20)),
         wage: casual.integer((from = 100), (to = 10000)),
         skills: [
-            casual.random_element([{
+            casual.random_element([
+                {
                     typeId: "5fd1144738dd6930a82bf241",
                     title: "Cleaning",
                 },
@@ -101,9 +123,16 @@ const dummyEmployees = async() => {
     });
     const result = await EmployeeObject.save();
 };
-const updateCompletedJobId = async() => {
+const dummyReviews = async () => {
+    const list = casual.reviewList;
+    const rating = list.reduce((a, b) => a + b.rating, 0) / list.length;
+    const revs = list.map((x) => x.id);
+
+    return casual.reviewList;
+};
+const updateCompletedJobId = async () => {
     let employees = await Employee.find({});
-    await employees.forEach(async(employee) => {
+    await employees.forEach(async (employee) => {
         employee.completedJobs = [
             casual.random_element([
                 "5fd7b5020ed86c358023f6be",
@@ -121,9 +150,9 @@ const updateCompletedJobId = async() => {
         const result = await employee.save();
     });
 };
-const addLocationEmployees = async() => {
+const addLocationEmployees = async () => {
     let employees = await Employee.find({});
-    await employees.forEach(async(employee) => {
+    await employees.forEach(async (employee) => {
         employee.location = {
             country: casual.country,
             city: casual.city,
@@ -136,12 +165,23 @@ const addLocationEmployees = async() => {
         employee.save();
     });
 };
-const updateJobs = async() => {
+const updateJobs = async () => {
     let jobs = await Job.find({});
-    await jobs.forEach(async(job) => {
+    await jobs.forEach(async (job) => {
         (job.price = casual.integer((from = 100), (to = 100000))),
-        console.log(job);
+            console.log(job);
         await job.save();
+    });
+};
+const updateEmployees = async () => {
+    let employees = await Employee.find({});
+    await employees.forEach(async (emp) => {
+        const list = casual.reviewList;
+        const rating = list.reduce((a, b) => a + b.rating, 0) / list.length;
+        const revs = list.map((x) => x.id);
+        emp.reviews = revs;
+        emp.rating = rating;
+        await emp.save();
     });
 };
 module.exports = {
@@ -150,4 +190,6 @@ module.exports = {
     updateCompletedJobId,
     addLocationEmployees,
     updateJobs,
+    dummyReviews,
+    updateEmployees,
 };
