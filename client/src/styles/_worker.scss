@@ -1,0 +1,53 @@
+.worker-card {
+    display: flex;
+    flex-direction: row;
+    border-radius: 0.5em;
+    margin: 0.6em;
+    padding: 0.4em;
+    border: 1px solid $light-gray;
+    transition: 0.2s ease-in-out;
+    h6 {
+        small {
+            float: right;
+        }
+    }
+    p {
+        font-size: 0.9rem;
+    }
+    &:hover {
+        transform: scale(1.02);
+        transition: 0.2s ease-in-out;
+        box-shadow: 6px 5px 5px $gray;
+    }
+    .worker-img {
+        width: 30%;
+        display: flex;
+        img {
+            border-radius: 0.5em;
+        }
+    }
+    .content {
+        padding: 0.4em;
+        width: 70%;
+    }
+    @media only screen and (max-width: 767px) {
+        margin: 0.4em;
+
+        flex-direction: column;
+        .worker-img {
+            width: 100%;
+            display: flex;
+            img {
+                border-radius: 0.5em;
+            }
+        }
+        .content {
+            width: 100%;
+            h6 {
+                small {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
