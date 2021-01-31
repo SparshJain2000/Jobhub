@@ -1,21 +1,22 @@
 const Employer = require("../../models/employer.model");
 const JobType = require("../../models/jobType.model");
+const Review = require("../../models/review.model");
 const Job = require("../../models/job.model");
-const transformJob = async(job) => {
+const transformJob = async (job) => {
     try {
-        if (job.date) job = {...job, date: job.date.toISOString() };
+        if (job.date) job = { ...job, date: job.date.toISOString() };
         if (job.updatedAt)
-            job = {...job, updatedAt: job.updatedAt.toISOString() };
+            job = { ...job, updatedAt: job.updatedAt.toISOString() };
         return job;
     } catch (e) {
         console.log(e);
         throw e;
     }
 };
-const getJob = async(id) => {
+const getJob = async (id) => {
     return await Job.findById(id).lean();
 };
-const populateJobs = async(employer) => {
+const populateJobs = async (employer) => {
     try {
         return {
             ...employer,
@@ -26,4 +27,20 @@ const populateJobs = async(employer) => {
         throw e;
     }
 };
-module.exports = { transformJob, populateJobs };
+const populateReviews = async (employee) => {
+    try {
+        return {
+            ...employee,
+            reviews: employee.reviews.map(async (id) => {
+                const x = await Review.findById(id).lean();
+                let { _id, updatedAt, ...emp } = x;
+                emp.id = _id;
+                return emp;
+            }),
+        };
+    } catch (e) {
+        console.log(e);
+        throw e;
+    }
+};
+module.exports = { transformJob, populateJobs, populateReviews };
