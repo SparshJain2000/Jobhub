@@ -17,9 +17,11 @@ const Home = () => {
                             non, iste, et eos
                         </p>
                         <div>
-                            <button className='btn btn-sm btn-secondary mr-1'>
-                                Hire worker
-                            </button>
+                            <Link
+                                to='/professionals'
+                                className='btn btn-sm btn-secondary ml-1'>
+                                Hire Professionals
+                            </Link>
                             <Link
                                 to='/jobs'
                                 className='btn btn-sm btn-outline-secondary ml-1'>

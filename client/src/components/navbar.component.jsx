@@ -115,7 +115,9 @@ const NavbarComponent = () => {
                             </UncontrolledDropdown>
                         </NavItem>
                         <NavItem className='m-1 my-2 my-lg-1'>
-                            <NavLink to='/professionals'>Professionals</NavLink>
+                            <NavLink to='/professionals'>
+                                Hire Professionals
+                            </NavLink>
                         </NavItem>
                         {(!context.token || context.isEmployer) && (
                             <NavItem className='m-1 my-2 my-lg-1  ml-lg-auto '>
