@@ -104,6 +104,7 @@ module.exports = buildSchema(`
             type RootQuery{
                 jobs: [Job!]!
                 job(id:ID!): Job!
+                employee(id:ID!): Employee!
                 searchJobs(params:JobQuery!): [Job!]
                 searchEmployees(params:EmployeeQuery!): [Employee!]
                 employers:[Employer!]!
