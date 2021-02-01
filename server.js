@@ -51,18 +51,18 @@ mongoose
     .then(() => {
         console.log("connected to MONGO 🎉");
     });
-app.get("/populate", async (req, res) => {
-    // const z = updateEmployees();
-    res.send("DONE");
-});
-app.get("/", async (req, res) => {
-    res.send("HELLO");
-});
-// app.use(express.static("client/build"));
-// app.use("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "client/build/index.html"));
+// app.get("/populate", async (req, res) => {
+//     // const z = updateEmployees();
+//     res.send("DONE");
 // });
-const PORT = process.env.PORT || 3000;
+// app.get("/", async (req, res) => {
+//     res.send("HELLO");
+// });
+app.use(express.static("client/build"));
+app.use("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
+});
+const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
     console.log(`Listening to Port : ${PORT} 🚀`);
 });
