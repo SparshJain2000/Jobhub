@@ -141,4 +141,49 @@ const ALL_EMPLOYEES = gql`
         }
     }
 `;
-export { GET_JOBS, GET_JOB, SEARCH_JOBS, SEARCH_WORKERS, ALL_EMPLOYEES };
+const GET_WORKER = gql`
+    query get_worker($_id: ID!) {
+        employee(id: $_id) {
+            _id
+            firstName
+            lastName
+            email
+            rating
+            experience
+            location {
+                city
+                state
+                country
+            }
+            reviews {
+                author {
+                    username
+                    id
+                }
+                comment
+                rating
+                id
+            }
+            completedJobs {
+                date
+                _id
+                title
+                updatedAt
+                location {
+                    city
+                }
+            }
+            skills {
+                title
+            }
+        }
+    }
+`;
+export {
+    GET_JOBS,
+    GET_JOB,
+    SEARCH_JOBS,
+    SEARCH_WORKERS,
+    ALL_EMPLOYEES,
+    GET_WORKER,
+};
