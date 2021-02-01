@@ -3,12 +3,21 @@ import UserImg from "../assets/user.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkedAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Badge } from "reactstrap";
-const WorkerCard = ({ worker }) => {
+const WorkerCard = ({ worker, setCurrentEmployee, setEmployeeModal }) => {
     return (
         <div className='col-6 px-0'>
-            <div className='worker-card '>
+            <div
+                className='worker-card '
+                onClick={() => {
+                    setCurrentEmployee(worker._id);
+                    setEmployeeModal(true);
+                }}>
                 <div className='worker-img'>
-                    <img className='img-fluid my-auto' src={UserImg} alt='' />
+                    <img
+                        className='img-fluid my-auto mx-auto'
+                        src={UserImg}
+                        alt=''
+                    />
                 </div>
                 <div className='content'>
                     <h6>

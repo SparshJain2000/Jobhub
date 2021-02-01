@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import WorkerInput from "../components/workerInput.component";
 import WorkerCard from "../components/workerCard.component";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import Loader from "../components/loader.component";
+import WorkerModal from "../components/worker.component";
 import { useQuery } from "@apollo/client";
 import { SEARCH_WORKERS } from "../graphql/query";
-const WorkerList = ({ query }) => {
+const WorkerList = ({
+    query,
+    setCurrentEmployee,
+    setEmployeeModal,
+    setErrorModal,
+    setErrorMsg,
+}) => {
     const { loading, data, error } = useQuery(SEARCH_WORKERS, {
         variables: query,
     });
     if (loading) return <Loader />;
     if (error) {
         console.log(error);
-        // const msg = error.networkError.result.errors[0].message;
-        // // setErrorModal(true);
-        // // setErrorMsg(
-        // alert(
-        //     msg === "UNAUTHENTICATED"
-        //         ? "Please login first to see details"
-        //         : "Something went wrong. Try again later.",
-        // );
-        // );
-        // setCurrentJob(null);
+        const msg = error.networkError.result.errors[0].message;
+        setErrorModal(true);
+        setErrorMsg(
+            msg === "UNAUTHENTICATED"
+                ? "Please login first to see details"
+                : "Something went wrong. Try again later.",
+        );
         return <p className='w-100 text-align-center'>Error</p>;
     }
 
@@ -32,7 +37,12 @@ const WorkerList = ({ query }) => {
                 </p>
             ) : (
                 data?.searchEmployees?.map((worker) => (
-                    <WorkerCard worker={worker} key={worker._id} />
+                    <WorkerCard
+                        worker={worker}
+                        key={worker._id}
+                        setCurrentEmployee={setCurrentEmployee}
+                        setEmployeeModal={setEmployeeModal}
+                    />
                 ))
             )}
         </div>
@@ -40,8 +50,13 @@ const WorkerList = ({ query }) => {
 };
 const Worker = (props) => {
     const [query, setQuery] = useState({});
+    const [employeeModal, setEmployeeModal] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
+    const [errorModal, setErrorModal] = useState(false);
+    const [currentEmployee, setCurrentEmployee] = useState(null);
+    const toggleErrorModal = () => setErrorModal(!errorModal);
+    const toggleEmployeeModal = () => setEmployeeModal(!employeeModal);
     useEffect(() => {
-        console.log(props?.location?.state?.query);
         if (props?.location?.state?.query) setQuery(props.location.state.query);
     }, [props?.location?.state?.query]);
     return (
@@ -51,7 +66,37 @@ const Worker = (props) => {
             </div>
             <hr className='my-0' />
             <WorkerInput query={query} setQuery={setQuery} />
-            <WorkerList query={query} />
+            <WorkerList
+                query={query}
+                setCurrentEmployee={setCurrentEmployee}
+                setEmployeeModal={setEmployeeModal}
+                setErrorModal={setErrorModal}
+                setErrorMsg={setErrorMsg}
+            />
+            <Modal
+                className='worker-modal'
+                isOpen={employeeModal}
+                toggle={toggleEmployeeModal}>
+                <ModalBody>
+                    <WorkerModal
+                        currentEmployee={currentEmployee}
+                        setCurrentEmployee={setCurrentEmployee}
+                    />
+                </ModalBody>
+                <ModalFooter className='p-1'>
+                    <Button size='sm' onClick={toggleEmployeeModal}>
+                        Close
+                    </Button>
+                </ModalFooter>
+            </Modal>
+            <Modal className='' isOpen={errorModal} toggle={toggleErrorModal}>
+                <ModalBody>{errorMsg}</ModalBody>
+                <ModalFooter className='p-1'>
+                    <Button size='sm' onClick={toggleErrorModal}>
+                        Close
+                    </Button>
+                </ModalFooter>
+            </Modal>
         </>
     );
 };
