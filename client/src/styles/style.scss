@@ -64,3 +64,15 @@ a {
 .myClassName__control {
     height: 40px;
 }
+
+.error-img {
+    width: 100%;
+    height: auto;
+    max-width: 8em;
+    margin: 2em;
+}
+.error-modal {
+    display: flex !important;
+    justify-content: center;
+    top: 30% !important;
+}

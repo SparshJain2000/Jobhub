@@ -37,7 +37,7 @@ const Jobs = ({
         console.log(error);
         return (
             <div className='w-100 text-align-center p-3'>
-                <img src={Error} alt='' className='img-fluid m-5' />
+                <img src={Error} alt='' className='error-img' />
                 <h5>Something went wrong. Try again later</h5>
             </div>
         );
@@ -173,7 +173,10 @@ const JobPage = (props) => {
                     )}
                 </div>
             )}
-            <Modal className='' isOpen={errorModal} toggle={toggleErrorModal}>
+            <Modal
+                className='error-modal'
+                isOpen={errorModal}
+                toggle={toggleErrorModal}>
                 <ModalBody>{errorMsg}</ModalBody>
                 <ModalFooter className='p-1'>
                     <Button size='sm' onClick={toggleErrorModal}>

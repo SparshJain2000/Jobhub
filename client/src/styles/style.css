@@ -195,6 +195,7 @@
 }
 
 .worker-modal.modal-dialog {
+  min-width: 50vw;
   width: auto;
 }
 
@@ -996,5 +997,22 @@ a:hover {
 
 .myClassName__control {
   height: 40px;
+}
+
+.error-img {
+  width: 100%;
+  height: auto;
+  max-width: 8em;
+  margin: 2em;
+}
+
+.error-modal {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  top: 30% !important;
 }
 /*# sourceMappingURL=style.css.map */

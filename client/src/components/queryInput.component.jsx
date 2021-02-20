@@ -206,12 +206,11 @@ export default class QueryInput extends Component {
                 <h4 className='text-align-center'> Filters </h4> <hr />
                 <Form>
                     <FormGroup>
-                        <h6>
+                        <h6
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => this.toggleHeaders("type")}>
                             Job Type
-                            <div
-                                name='type'
-                                className='float-right'
-                                onClick={(e) => this.toggleHeaders("type")}>
+                            <div name='type' className='float-right'>
                                 <FontAwesomeIcon
                                     icon={
                                         this.state.headers.type
@@ -263,12 +262,11 @@ export default class QueryInput extends Component {
                     </FormGroup>
                     <hr />
                     <FormGroup>
-                        <h6>
+                        <h6
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => this.toggleHeaders("location")}>
                             Location
-                            <div
-                                name='location'
-                                className='float-right'
-                                onClick={(e) => this.toggleHeaders("location")}>
+                            <div name='location' className='float-right'>
                                 <FontAwesomeIcon
                                     icon={
                                         this.state.headers.location
@@ -325,13 +323,11 @@ export default class QueryInput extends Component {
                     <hr />
 
                     <FormGroup>
-                        <h6>
-                            {" "}
+                        <h6
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => this.toggleHeaders("time")}>
                             Timings
-                            <div
-                                name='time'
-                                className='float-right'
-                                onClick={(e) => this.toggleHeaders("time")}>
+                            <div name='time' className='float-right'>
                                 <FontAwesomeIcon
                                     icon={
                                         this.state.headers.time
@@ -380,12 +376,11 @@ export default class QueryInput extends Component {
                     <hr />
 
                     <FormGroup>
-                        <h6>
+                        <h6
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => this.toggleHeaders("price")}>
                             Price
-                            <div
-                                name='price'
-                                className='float-right'
-                                onClick={(e) => this.toggleHeaders("price")}>
+                            <div name='price' className='float-right'>
                                 <FontAwesomeIcon
                                     icon={
                                         this.state.headers.price

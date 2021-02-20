@@ -19,6 +19,7 @@ const WorkerList = ({
     });
     if (loading) return <Loader />;
     if (error) {
+        console.log({ ...error });
         const msg = error?.networkError?.result?.errors[0]?.message;
         if (msg) {
             setErrorModal(true);

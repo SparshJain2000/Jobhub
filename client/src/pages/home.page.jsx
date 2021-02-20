@@ -12,9 +12,8 @@ const Home = () => {
                     <div className='col-12 col-md-6 my-auto pl-5 '>
                         <h1 className='text-white'>JobHub </h1>
                         <p style={{ color: "var(--gray)" }}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Labore illum sint eligendi at, ipsam ipsum
-                            non, iste, et eos
+                            A platform for connecting professionals and
+                            employers
                         </p>
                         <div>
                             <Link
