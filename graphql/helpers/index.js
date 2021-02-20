@@ -27,6 +27,18 @@ const populateJobs = async (employer) => {
         throw e;
     }
 };
+const transformEmployee = (data) => {
+    if (!data.experience) data.experience = 0;
+    if (!data.skills) data.skills = [];
+    if (!data.firstName) data.firstName = "Sample Name";
+    if (!data.lastName) data.lastName = "Sample last name";
+    if (!data.wage) data.wage = 0;
+    if (!data.rating) data.rating = 0;
+    if (!data.location)
+        data.location = { city: "City", state: "State", country: "India" };
+    console.log(data);
+    return data;
+};
 const populateReviews = async (employee) => {
     try {
         return {
@@ -43,4 +55,9 @@ const populateReviews = async (employee) => {
         throw e;
     }
 };
-module.exports = { transformJob, populateJobs, populateReviews };
+module.exports = {
+    transformJob,
+    populateJobs,
+    populateReviews,
+    transformEmployee,
+};

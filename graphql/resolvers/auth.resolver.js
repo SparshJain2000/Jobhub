@@ -2,7 +2,8 @@ const { pathToArray } = require("graphql/jsutils/Path");
 const Employer = require("../../models/employer.model"),
     Employee = require("../../models/employee.model"),
     jwt = require("jsonwebtoken"),
-    bcrypt = require("bcrypt");
+    bcrypt = require("bcrypt"),
+    { transformEmployee } = require("../helpers");
 
 module.exports = {
     createEmployer: async (args) => {
@@ -62,10 +63,9 @@ module.exports = {
             });
             if (user) throw new Error("EMAIL_EXISTS");
             const hashed = await bcrypt.hash(args.userInput.password, 12);
-            const newUser = new Employee({
-                ...args.userInput,
-                password: hashed,
-            });
+            const newUser = new Employee(
+                transformEmployee({ ...args.userInput, password: hashed }),
+            );
             const result = await newUser.save();
             const token = jwt.sign(
                 { userId: result.id, email: result.email, isEmployer: false },
