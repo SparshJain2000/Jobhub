@@ -96,6 +96,9 @@ module.exports = buildSchema(`
             input EmployeeInput{
                 email:String!
                 password:String!
+                firstName:String!
+                lastName:String!
+                location:InputLocation
             }
             type AuthData{
                 userId:ID!

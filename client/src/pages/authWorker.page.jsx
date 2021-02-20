@@ -15,8 +15,48 @@ import {
     FormFeedback,
 } from "reactstrap";
 import { SIGNUP_WORKER, LOGIN_WORKER } from "../graphql/mutation";
+import cities from "../assets/cities.min.json";
 import { useMutation } from "@apollo/client";
 import AuthContext from "../context/auth.context";
+import AsyncSelect from "react-select/async";
+const customStyles = {
+    control: (provided, state) => ({
+        ...provided,
+        background: "var(--primary)",
+        color: "white",
+        minHeight: "40px",
+        height: "40px",
+        boxShadow: state.isFocused ? null : null,
+    }),
+    singleValue: (provided, state) => ({
+        ...provided,
+        color: "white",
+    }),
+    valueContainer: (provided, state) => ({
+        ...provided,
+        height: "40px",
+        padding: "0 8px",
+        color: "white",
+    }),
+    option: (provided) => ({
+        ...provided,
+        color: "black",
+    }),
+    input: (provided, state) => ({
+        ...provided,
+        margin: "0px",
+        color: "white",
+    }),
+    indicatorSeparator: (state) => ({
+        display: "none",
+        color: "black",
+    }),
+    indicatorsContainer: (provided, state) => ({
+        ...provided,
+        height: "40px",
+        color: "black",
+    }),
+};
 const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return re.test(email);
@@ -28,11 +68,34 @@ const validateField = (field, value) => {
             return validateEmail(value);
         case "password":
             return validatePassword(value);
-
+        case "location":
+            return value;
+        case "firstName":
+        case "lastName":
+            return value !== "";
         default:
             return false;
     }
 };
+const loadCities = (inputValue, callback) => {
+    setTimeout(() => {
+        callback(
+            cities
+                .filter(
+                    (city) =>
+                        city.city.toLowerCase().includes(inputValue) ||
+                        city.state.toLowerCase().includes(inputValue),
+                )
+                .map((x) => {
+                    return {
+                        label: x.city + ", " + x.state,
+                        value: x.city + ", " + x.state,
+                    };
+                }),
+        );
+    }, 0);
+};
+
 const AuthWorker = () => {
     const location = useLocation();
     const history = useHistory();
@@ -44,6 +107,9 @@ const AuthWorker = () => {
     const [valid, setValid] = useState({
         email: true,
         password: true,
+        firstName: true,
+        lastName: true,
+        location: true,
     });
     const [isLogin, setIsLogin] = useState(
         location.pathname.split("/")[2] === "login",
@@ -52,15 +118,33 @@ const AuthWorker = () => {
         setIsLogin(location.pathname.split("/")[2] === "login"),
     );
     const toggleErrorModal = () => setErrorModal(!errorModal);
-    const handleChange = async (e) => {
-        setCredentials({
-            ...credentials,
-            [e.target.name]: e.target.value,
-        });
-        await setValid({
-            ...valid,
-            [e.target.name]: validateField(e.target.name, e.target.value),
-        });
+    const handleChange = async (e, name) => {
+        console.log(e, name);
+        if (name) {
+            setCredentials({
+                ...credentials,
+                [name]: e
+                    ? {
+                          city: e.value.split(", ")[0],
+                          state: e.value.split(", ")[1],
+                          country: "",
+                      }
+                    : null,
+            });
+            await setValid({
+                ...valid,
+                [name]: validateField([name], e),
+            });
+        } else {
+            setCredentials({
+                ...credentials,
+                [e.target.name]: e.target.value,
+            });
+            await setValid({
+                ...valid,
+                [e.target.name]: validateField(e.target.name, e.target.value),
+            });
+        }
     };
     const [login] = useMutation(LOGIN_WORKER, {
         variables: credentials,
@@ -70,6 +154,8 @@ const AuthWorker = () => {
     });
     const submit = async (e) => {
         e.preventDefault();
+        console.log(credentials);
+
         try {
             console.log(credentials);
             const result = await (isLogin ? login() : signup());
@@ -138,7 +224,84 @@ const AuthWorker = () => {
                             Password length should be at least 8
                         </FormFeedback>
                     </FormGroup>
-
+                    {!isLogin && (
+                        <>
+                            <div className='row px-0'>
+                                <FormGroup className='col-12 col-md-6 px-0 pr-md-1'>
+                                    <Input
+                                        type='firstName'
+                                        name='firstName'
+                                        id='firstName'
+                                        placeholder='First Name'
+                                        onChange={handleChange}
+                                        required
+                                        invalid={
+                                            credentials?.firstName === "" ||
+                                            !valid.firstName
+                                        }
+                                    />
+                                    <FormFeedback>
+                                        Please enter your name
+                                    </FormFeedback>
+                                </FormGroup>
+                                <FormGroup className='col-12 col-md-6 px-0 pl-md-1'>
+                                    <Input
+                                        type='lastName'
+                                        name='lastName'
+                                        id='lastName'
+                                        placeholder='Last Name'
+                                        onChange={handleChange}
+                                        required
+                                        invalid={
+                                            credentials?.lastName === "" ||
+                                            !valid.lastName
+                                        }
+                                    />
+                                    <FormFeedback>
+                                        Please enter your name
+                                    </FormFeedback>
+                                </FormGroup>
+                            </div>
+                            <FormGroup>
+                                <AsyncSelect
+                                    className='basic-single'
+                                    classNamePrefix='select'
+                                    styles={customStyles}
+                                    isClearable={true}
+                                    isSearchable={true}
+                                    value={
+                                        credentials?.location?.city
+                                            ? {
+                                                  label:
+                                                      credentials.location
+                                                          .city +
+                                                      ", " +
+                                                      credentials.location
+                                                          .state,
+                                                  value:
+                                                      credentials.location
+                                                          .city +
+                                                      ", " +
+                                                      credentials.location
+                                                          .state,
+                                              }
+                                            : null
+                                    }
+                                    name='location'
+                                    placeholder='Location'
+                                    onChange={(e) =>
+                                        handleChange(e, "location")
+                                    }
+                                    invalid={
+                                        credentials?.location === null ||
+                                        !valid.location
+                                    }
+                                    noOptionsMessage={() => "Type city name"}
+                                    loadOptions={loadCities}
+                                />
+                            </FormGroup>
+                        </>
+                    )}
                     <FormGroup className='row justify-content-end'>
                         {isLogin ? (
                             <>
@@ -160,7 +323,7 @@ const AuthWorker = () => {
                         ) : (
                             <>
                                 <h5 className='col-12 col-md-8 py-2 pl-0'>
-                                    Already registered ?{" "}
+                                    Already registered ?
                                     <Link to='/professional/login'>Login</Link>
                                 </h5>
                                 <div className='col-12 col-md-4 text-align-end px-0 my-auto'>

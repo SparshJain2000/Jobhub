@@ -44,8 +44,22 @@ const LOGIN_WORKER = gql`
     }
 `;
 const SIGNUP_WORKER = gql`
-    mutation SignupEmployee($email: String!, $password: String!) {
-        createEmployee(userInput: { email: $email, password: $password }) {
+    mutation SignupEmployee(
+        $email: String!
+        $password: String!
+        $firstName: String!
+        $lastName: String!
+        $location: InputLocation
+    ) {
+        createEmployee(
+            userInput: {
+                email: $email
+                password: $password
+                firstName: $firstName
+                lastName: $lastName
+                location: $location
+            }
+        ) {
             userId
             token
             tokenExpiration
