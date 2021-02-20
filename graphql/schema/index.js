@@ -90,6 +90,8 @@ module.exports = buildSchema(`
                 email:String!
                 password:String!
                 contact:String!
+                firstName:String!
+                lastName:String!
             }
             input EmployeeInput{
                 email:String!
