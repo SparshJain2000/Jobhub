@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import WorkerInput from "../components/workerInput.component";
 import WorkerCard from "../components/workerCard.component";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import Error from "../assets/error.svg";
 import Loader from "../components/loader.component";
 import WorkerModal from "../components/worker.component";
 import { useQuery } from "@apollo/client";
@@ -18,15 +19,21 @@ const WorkerList = ({
     });
     if (loading) return <Loader />;
     if (error) {
-        console.log(error);
-        const msg = error.networkError.result.errors[0].message;
-        setErrorModal(true);
-        setErrorMsg(
-            msg === "UNAUTHENTICATED"
-                ? "Please login first to see details"
-                : "Something went wrong. Try again later.",
+        const msg = error?.networkError?.result?.errors[0]?.message;
+        if (msg) {
+            setErrorModal(true);
+            setErrorMsg(
+                msg === "UNAUTHENTICATED"
+                    ? "Please login first to see details"
+                    : "Something went wrong. Try again later.",
+            );
+        }
+        return (
+            <div className='w-100 text-align-center p-3'>
+                <img src={Error} alt='' className='error-img' />
+                <h5>Something went wrong. Try again later</h5>
+            </div>
         );
-        return <p className='w-100 text-align-center'>Error</p>;
     }
 
     return (
@@ -89,7 +96,10 @@ const Worker = (props) => {
                     </Button>
                 </ModalFooter>
             </Modal>
-            <Modal className='' isOpen={errorModal} toggle={toggleErrorModal}>
+            <Modal
+                className='error-modal'
+                isOpen={errorModal}
+                toggle={toggleErrorModal}>
                 <ModalBody>{errorMsg}</ModalBody>
                 <ModalFooter className='p-1'>
                     <Button size='sm' onClick={toggleErrorModal}>
