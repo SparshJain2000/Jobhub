@@ -14,9 +14,17 @@ const SIGNUP_EMPLOYER = gql`
         $email: String!
         $password: String!
         $contact: String!
+        $firstName: String!
+        $lastName: String!
     ) {
         createEmployer(
-            userInput: { email: $email, password: $password, contact: $contact }
+            userInput: {
+                email: $email
+                password: $password
+                contact: $contact
+                firstName: $firstName
+                lastName: $lastName
+            }
         ) {
             userId
             token
