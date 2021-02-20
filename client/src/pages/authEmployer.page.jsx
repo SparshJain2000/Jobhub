@@ -37,6 +37,9 @@ const validateField = (field, value) => {
             return validatePassword(value);
         case "contact":
             return validateContact(value);
+        case "firstName":
+        case "lastName":
+            return value !== "";
         default:
             return false;
     }
@@ -53,6 +56,8 @@ const AuthEmployer = () => {
         email: true,
         password: true,
         contact: true,
+        firstName: true,
+        lastName: true,
     });
     const [isLogin, setIsLogin] = useState(
         location.pathname.split("/")[2] === "login",
@@ -146,28 +151,67 @@ const AuthEmployer = () => {
                         </FormFeedback>
                     </FormGroup>
                     {!isLogin && (
-                        <FormGroup>
-                            <InputGroup>
-                                <InputGroupAddon addonType='prepend'>
-                                    <InputGroupText>+91</InputGroupText>
-                                </InputGroupAddon>
-                                <Input
-                                    type='contact'
-                                    name='contact'
-                                    id='contact'
-                                    placeholder='Contact Number'
-                                    onChange={handleChange}
-                                    required
-                                    invalid={
-                                        credentials?.contact === "" ||
-                                        !valid.contact
-                                    }
-                                />
-                                <FormFeedback>
-                                    Please enter a valid contact number
-                                </FormFeedback>
-                            </InputGroup>
-                        </FormGroup>
+                        <>
+                            <div className='row px-0'>
+                                <FormGroup className='col-12 col-md-6 px-0 pr-md-1'>
+                                    <Input
+                                        type='firstName'
+                                        name='firstName'
+                                        id='firstName'
+                                        placeholder='First Name'
+                                        onChange={handleChange}
+                                        required
+                                        invalid={
+                                            credentials?.firstName === "" ||
+                                            !valid.firstName
+                                        }
+                                    />
+                                    <FormFeedback>
+                                        Please enter your name
+                                    </FormFeedback>
+                                </FormGroup>
+                                <FormGroup className='col-12 col-md-6 px-0 pl-md-1'>
+                                    <Input
+                                        type='lastName'
+                                        name='lastName'
+                                        id='lastName'
+                                        placeholder='Last Name'
+                                        onChange={handleChange}
+                                        required
+                                        invalid={
+                                            credentials?.lastName === "" ||
+                                            !valid.lastName
+                                        }
+                                    />
+                                    <FormFeedback>
+                                        Please enter your name
+                                    </FormFeedback>
+                                </FormGroup>
+                            </div>
+
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupAddon addonType='prepend'>
+                                        <InputGroupText>+91</InputGroupText>
+                                    </InputGroupAddon>
+                                    <Input
+                                        type='contact'
+                                        name='contact'
+                                        id='contact'
+                                        placeholder='Contact Number'
+                                        onChange={handleChange}
+                                        required
+                                        invalid={
+                                            credentials?.contact === "" ||
+                                            !valid.contact
+                                        }
+                                    />
+                                    <FormFeedback>
+                                        Please enter a valid contact number
+                                    </FormFeedback>
+                                </InputGroup>
+                            </FormGroup>
+                        </>
                     )}
 
                     <FormGroup className='row justify-content-end'>
