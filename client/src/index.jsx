@@ -12,18 +12,15 @@ import {
     concat,
 } from "@apollo/client";
 
-const httpLink = new HttpLink({ uri: "http://localhost:3000/graphql" });
+const httpLink = new HttpLink({ uri: "/graphql" });
 const authMiddleware = new ApolloLink((operation, forward) => {
     // add the authorization to the headers
-    console.log("inide");
     const token = JSON.parse(sessionStorage.getItem("user"))?.token;
-
     operation.setContext({
         headers: {
             authorization: token ? `Bearer ${token}` : "",
         },
     });
-
     return forward(operation);
 });
 
