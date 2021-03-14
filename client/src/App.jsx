@@ -71,28 +71,31 @@ class App extends Component {
                                 />
                                 <Route path='/about' exact component={About} />
                                 {this.state.token && (
-                                    <Redirect from='/employer' to='/' />
+                                    <Redirect from='/employer/auth' to='/' />
                                 )}
                                 {this.state.token && !this.state.isEmployer && (
-                                    <Redirect from='/professional' to='/' />
+                                    <Redirect
+                                        from='/professional/auth'
+                                        to='/'
+                                    />
                                 )}
                                 <Route
-                                    path='/employer/login'
+                                    path='/employer/auth/login'
                                     exact
                                     component={AuthEmployer}
                                 />
                                 <Route
-                                    path='/employer/signup'
+                                    path='/employer/auth/signup'
                                     exact
                                     component={AuthEmployer}
                                 />
                                 <Route
-                                    path='/professional/login'
+                                    path='/professional/auth/ogin'
                                     exact
                                     component={AuthWorker}
                                 />
                                 <Route
-                                    path='/professional/signup'
+                                    path='/professional/auth/signup'
                                     exact
                                     component={AuthWorker}
                                 />
