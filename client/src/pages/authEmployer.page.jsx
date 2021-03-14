@@ -60,10 +60,10 @@ const AuthEmployer = () => {
         lastName: true,
     });
     const [isLogin, setIsLogin] = useState(
-        location.pathname.split("/")[2] === "login",
+        location.pathname.split("/")[3] === "login",
     );
     history.listen((location, action) =>
-        setIsLogin(location.pathname.split("/")[2] === "login"),
+        setIsLogin(location.pathname.split("/")[3] === "login"),
     );
     const toggleErrorModal = () => setErrorModal(!errorModal);
     const handleChange = async (e) => {
@@ -218,7 +218,7 @@ const AuthEmployer = () => {
                         {isLogin ? (
                             <>
                                 <div className='col-12 col-md-8 py-2 pl-0'>
-                                    <Link to='/employer/login'>
+                                    <Link to='/employer/auth/login'>
                                         Forgot Password ?
                                     </Link>
                                 </div>
@@ -240,7 +240,7 @@ const AuthEmployer = () => {
                             <>
                                 <h5 className='col-12 col-md-8 py-2 pl-0'>
                                     Already a customer ?{" "}
-                                    <Link to='/employer/login'>Login</Link>
+                                    <Link to='/employer/auth/login'>Login</Link>
                                 </h5>
                                 <div className='col-12 col-md-4 text-align-end px-0 my-auto'>
                                     <Button
@@ -262,7 +262,7 @@ const AuthEmployer = () => {
                         <FormGroup>
                             <h5>
                                 New to JobHub ?{" "}
-                                <Link to='/employer/signup'>SignUp</Link>
+                                <Link to='/employer/auth/signup'>SignUp</Link>
                             </h5>
                         </FormGroup>
                     )}

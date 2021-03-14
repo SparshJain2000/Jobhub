@@ -121,7 +121,7 @@ const NavbarComponent = () => {
                         </NavItem>
                         {(!context.token || context.isEmployer) && (
                             <NavItem className='m-1 my-2 my-lg-1  ml-lg-auto '>
-                                <NavLink to='/professional/login'>
+                                <NavLink to='/professional/auth/login'>
                                     Register as Professional
                                 </NavLink>
                                 <UncontrolledDropdown
@@ -135,13 +135,13 @@ const NavbarComponent = () => {
                                     <DropdownMenu className='dropdown-menu-right'>
                                         <DropdownItem>
                                             <NavLink
-                                                to='/professional/login'
+                                                to='/professional/auth/login'
                                                 exact>
                                                 Login
                                             </NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
-                                            <NavLink to='/professional/signup'>
+                                            <NavLink to='/professional/auth/signup'>
                                                 Signup
                                             </NavLink>
                                         </DropdownItem>
@@ -160,7 +160,9 @@ const NavbarComponent = () => {
                                     Logout
                                 </span>
                             ) : (
-                                <NavLink to='/employer/login'>Login</NavLink>
+                                <NavLink to='/employer/auth/login'>
+                                    Login
+                                </NavLink>
                             )}
                         </NavItem>
                     </Nav>
