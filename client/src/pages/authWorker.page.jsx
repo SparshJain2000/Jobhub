@@ -112,10 +112,10 @@ const AuthWorker = () => {
         location: true,
     });
     const [isLogin, setIsLogin] = useState(
-        location.pathname.split("/")[2] === "login",
+        location.pathname.split("/")[3] === "login",
     );
     history.listen((location, action) =>
-        setIsLogin(location.pathname.split("/")[2] === "login"),
+        setIsLogin(location.pathname.split("/")[3] === "login"),
     );
     const toggleErrorModal = () => setErrorModal(!errorModal);
     const handleChange = async (e, name) => {
@@ -306,7 +306,7 @@ const AuthWorker = () => {
                         {isLogin ? (
                             <>
                                 <div className='col-12 col-md-8 py-2 pl-0'>
-                                    <Link to='/professional/login'>
+                                    <Link to='/professional/auth/login'>
                                         Forgot Password ?
                                     </Link>
                                 </div>
@@ -324,7 +324,9 @@ const AuthWorker = () => {
                             <>
                                 <h5 className='col-12 col-md-8 py-2 pl-0'>
                                     Already registered ?
-                                    <Link to='/professional/login'>Login</Link>
+                                    <Link to='/professional/auth/login'>
+                                        Login
+                                    </Link>
                                 </h5>
                                 <div className='col-12 col-md-4 text-align-end px-0 my-auto'>
                                     <Button
@@ -342,7 +344,9 @@ const AuthWorker = () => {
                         <FormGroup>
                             <h5>
                                 New to JobHub ?{" "}
-                                <Link to='/professional/signup'>SignUp</Link>
+                                <Link to='/professional/auth/signup'>
+                                    SignUp
+                                </Link>
                             </h5>
                         </FormGroup>
                     )}
