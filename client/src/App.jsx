@@ -10,6 +10,7 @@ import Footer from "./components/footer.component";
 import Loading from "./components/loader.component";
 import { Component } from "react";
 import AuthContext from "./context/auth.context";
+import CreateJob from "./pages/createjob.page";
 class App extends Component {
     state = { loading: true, token: null, userId: null, isEmployer: false };
     componentDidMount() {
@@ -89,8 +90,21 @@ class App extends Component {
                                     exact
                                     component={AuthEmployer}
                                 />
+                                {this.state.token && this.state.isEmployer ? (
+                                    <Route
+                                        path='/employer/create-job'
+                                        exact
+                                        component={CreateJob}
+                                    />
+                                ) : (
+                                    <Redirect
+                                        from='/employer/create-job'
+                                        to='/employer/auth/login'
+                                    />
+                                )}
+
                                 <Route
-                                    path='/professional/auth/ogin'
+                                    path='/professional/auth/login'
                                     exact
                                     component={AuthWorker}
                                 />
