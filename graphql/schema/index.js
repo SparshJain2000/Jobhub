@@ -99,7 +99,17 @@ module.exports = buildSchema(`
                 firstName:String!
                 lastName:String!
                 location:InputLocation
+                skills:[String!]
             }
+            input JobInput{
+                title: String!
+                description: String
+                type:String
+                date: String
+                location:InputLocation
+                price:Float!
+            }
+            
             type AuthData{
                 userId:ID!
                 token:String!
@@ -119,8 +129,9 @@ module.exports = buildSchema(`
             type RootMutation{
                 createEmployee(userInput : EmployeeInput): AuthData
                 createEmployer(userInput : EmployerInput): AuthData
-                loginEmployer(email:String!,password:String!):AuthData
-                loginEmployee(email:String!,password:String!):AuthData
+                loginEmployer(email:String!,password:String!): AuthData
+                loginEmployee(email:String!,password:String!): AuthData
+                createJob(jobInput : JobInput) : Job
             }
             schema{
                 query: RootQuery
