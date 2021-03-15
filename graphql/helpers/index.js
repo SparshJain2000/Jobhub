@@ -27,16 +27,27 @@ const populateJobs = async (employer) => {
         throw e;
     }
 };
-const transformEmployee = (data) => {
+const transformEmployee = async (data) => {
+    if (data.skills) {
+        try {
+            const types = await JobType.find({});
+            data = {
+                ...data,
+                skills: types.filter((x) => data.skills.includes(x.title)),
+            };
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
     if (!data.experience) data.experience = 0;
     if (!data.skills) data.skills = [];
-    if (!data.firstName) data.firstName = "Sample Name";
+    if (!data.firstName) data.firstName = "Sample first Name";
     if (!data.lastName) data.lastName = "Sample last name";
     if (!data.wage) data.wage = 0;
     if (!data.rating) data.rating = 0;
     if (!data.location)
         data.location = { city: "City", state: "State", country: "India" };
-    console.log(data);
+    if (!data.location.country) data.location.country = "India";
     return data;
 };
 const populateReviews = async (employee) => {
