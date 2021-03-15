@@ -50,6 +50,7 @@ const SIGNUP_WORKER = gql`
         $firstName: String!
         $lastName: String!
         $location: InputLocation
+        $skills: [String!]
     ) {
         createEmployee(
             userInput: {
@@ -58,6 +59,7 @@ const SIGNUP_WORKER = gql`
                 firstName: $firstName
                 lastName: $lastName
                 location: $location
+                skills: $skills
             }
         ) {
             userId

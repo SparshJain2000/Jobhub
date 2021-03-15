@@ -55,8 +55,6 @@ module.exports = {
     },
 
     createEmployee: async (args) => {
-        console.log(args.userInput);
-
         try {
             const user = await Employee.findOne({
                 email: args.userInput.email,
@@ -64,7 +62,10 @@ module.exports = {
             if (user) throw new Error("EMAIL_EXISTS");
             const hashed = await bcrypt.hash(args.userInput.password, 12);
             const newUser = new Employee(
-                transformEmployee({ ...args.userInput, password: hashed }),
+                await transformEmployee({
+                    ...args.userInput,
+                    password: hashed,
+                }),
             );
             const result = await newUser.save();
             const token = jwt.sign(
