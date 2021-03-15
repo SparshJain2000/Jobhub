@@ -16,9 +16,11 @@ import {
 } from "reactstrap";
 import { SIGNUP_WORKER, LOGIN_WORKER } from "../graphql/mutation";
 import cities from "../assets/cities.min.json";
+import { types } from "../assets/data";
 import { useMutation } from "@apollo/client";
 import AuthContext from "../context/auth.context";
 import AsyncSelect from "react-select/async";
+import Select from "react-select";
 const customStyles = {
     control: (provided, state) => ({
         ...provided,
@@ -63,13 +65,16 @@ const validateEmail = (email) => {
 };
 const validatePassword = (pass) => pass.length >= 8;
 const validateField = (field, value) => {
+    // console.log(field);
     switch (field) {
         case "email":
             return validateEmail(value);
         case "password":
             return validatePassword(value);
         case "location":
-            return value;
+            return value !== undefined && value !== null;
+        case "skills":
+            return value !== undefined && value !== null && value.length !== 0;
         case "firstName":
         case "lastName":
             return value !== "";
@@ -109,7 +114,8 @@ const AuthWorker = () => {
         password: true,
         firstName: true,
         lastName: true,
-        location: true,
+        location: false,
+        skills: false,
     });
     const [isLogin, setIsLogin] = useState(
         location.pathname.split("/")[3] === "login",
@@ -119,8 +125,8 @@ const AuthWorker = () => {
     );
     const toggleErrorModal = () => setErrorModal(!errorModal);
     const handleChange = async (e, name) => {
-        console.log(e, name);
-        if (name) {
+        // console.log(e, name);
+        if (name === "location") {
             setCredentials({
                 ...credentials,
                 [name]: e
@@ -133,7 +139,16 @@ const AuthWorker = () => {
             });
             await setValid({
                 ...valid,
-                [name]: validateField([name], e),
+                [name]: validateField(name, e),
+            });
+        } else if (name === "skills") {
+            setCredentials({
+                ...credentials,
+                [name]: e ? e.map((skills) => skills.label) : null,
+            });
+            await setValid({
+                ...valid,
+                [name]: validateField(name, e),
             });
         } else {
             setCredentials({
@@ -154,8 +169,11 @@ const AuthWorker = () => {
     });
     const submit = async (e) => {
         e.preventDefault();
-        console.log(credentials);
-
+        console.log(credentials, valid);
+        if (!isLogin && !(credentials.location && credentials.skills)) {
+            alert("Fill fields");
+            return;
+        }
         try {
             console.log(credentials);
             const result = await (isLogin ? login() : signup());
@@ -300,6 +318,45 @@ const AuthWorker = () => {
                                     loadOptions={loadCities}
                                 />
                             </FormGroup>
+                            <FormGroup>
+                                <Select
+                                    className='basic-single'
+                                    classNamePrefix='select'
+                                    styles={customStyles}
+                                    isClearable={true}
+                                    isSearchable={true}
+                                    isMulti={true}
+                                    // value={
+                                    //     credentials?.location?.city
+                                    //         ? {
+                                    //               label:
+                                    //                   credentials.location
+                                    //                       .city +
+                                    //                   ", " +
+                                    //                   credentials.location
+                                    //                       .state,
+                                    //               value:
+                                    //                   credentials.location
+                                    //                       .city +
+                                    //                   ", " +
+                                    //                   credentials.location
+                                    //                       .state,
+                                    //           }
+                                    //         : null
+                                    // }
+                                    name='skills'
+                                    placeholder='Job Type'
+                                    onChange={(e) => handleChange(e, "skills")}
+                                    invalid={
+                                        credentials?.skills === null ||
+                                        !valid.skills
+                                    }
+                                    noOptionsMessage={() => "Type profession"}
+                                    options={types.map((type) => {
+                                        return { label: type, value: type };
+                                    })}
+                                />
+                            </FormGroup>
                         </>
                     )}
                     <FormGroup className='row justify-content-end'>
@@ -332,7 +389,12 @@ const AuthWorker = () => {
                                     <Button
                                         color='secondary'
                                         disabled={
-                                            !(valid.email && valid.password)
+                                            !(
+                                                valid.email &&
+                                                valid.password &&
+                                                valid.location &&
+                                                valid.skills
+                                            )
                                         }>
                                         Sign Up
                                     </Button>
