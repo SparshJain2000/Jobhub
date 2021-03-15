@@ -1,7 +1,16 @@
 .img-fluid-card {
     width: 100% !important;
 }
-
+.job-form {
+    border-radius: 0.5rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.3);
+    .job-title {
+        padding: 0 0.25rem;
+        h6 {
+            margin: 0;
+        }
+    }
+}
 .card {
     transition: 0.4s ease-in-out;
     &:hover {
