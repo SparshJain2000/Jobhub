@@ -5,6 +5,34 @@ const Job = require("../../models/job.model");
 const transformJob = async (job) => {
     try {
         if (job.date) job = { ...job, date: job.date.toISOString() };
+
+        if (job.updatedAt)
+            job = { ...job, updatedAt: job.updatedAt.toISOString() };
+        return job;
+    } catch (e) {
+        console.log(e);
+        throw e;
+    }
+};
+const transformJobInput = async (job) => {
+    try {
+        job = {
+            ...job,
+            date: job.date ? job.date.toISOString() : new Date().toISOString(),
+        };
+        if (job.type) {
+            try {
+                const types = await JobType.find({});
+                const c = types.filter((x) => x.title === job.type)[0];
+                job.type = {
+                    typeId: c._id,
+                    title: c.title,
+                };
+            } catch (e) {
+                console.log(e);
+                throw new Error(e);
+            }
+        }
         if (job.updatedAt)
             job = { ...job, updatedAt: job.updatedAt.toISOString() };
         return job;
@@ -33,7 +61,14 @@ const transformEmployee = async (data) => {
             const types = await JobType.find({});
             data = {
                 ...data,
-                skills: types.filter((x) => data.skills.includes(x.title)),
+                skills: types
+                    .filter((x) => data.skills.includes(x.title))
+                    .map((type) => {
+                        return {
+                            typeId: type._id,
+                            title: type.title,
+                        };
+                    }),
             };
         } catch (e) {
             throw new Error(e);
@@ -71,4 +106,5 @@ module.exports = {
     populateJobs,
     populateReviews,
     transformEmployee,
+    transformJobInput,
 };

@@ -1,5 +1,5 @@
 const Job = require("../../models/job.model");
-const { transformJob } = require("../helpers/index");
+const { transformJob, transformJobInput } = require("../helpers/index");
 const {
     jobQuery,
     projectionBuilder,
@@ -45,6 +45,21 @@ module.exports = {
         } catch (e) {
             console.log(e);
             throw e;
+        }
+    },
+    createJob: async ({ jobInput }, req, context) => {
+        if (!req.isAuth) throw Error("UNAUTHENTICATED");
+        if (!req.isEmployer) throw Error("NOT_EMPLOYER");
+        try {
+            const projection = projectionBuilder(context);
+            const job = new Job(
+                await transformJobInput({ ...jobInput, creator: req.userId }),
+            );
+            await job.save();
+            return job;
+        } catch (e) {
+            console.log(e);
+            throw new Error(e);
         }
     },
 };
