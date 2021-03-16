@@ -18,7 +18,9 @@ const transformJobInput = async (job) => {
     try {
         job = {
             ...job,
-            date: job.date ? job.date.toISOString() : new Date().toISOString(),
+            date: job.date
+                ? new Date(job.date).toISOString()
+                : new Date().toISOString(),
         };
         if (job.type) {
             try {
