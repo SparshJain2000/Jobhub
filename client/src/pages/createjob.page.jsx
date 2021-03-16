@@ -11,6 +11,8 @@ import {
     Label,
     Button,
 } from "reactstrap";
+import { useMutation } from "@apollo/client";
+import { CREATE_JOB } from "../graphql/mutation";
 const loadCities = (inputValue, callback) => {
     setTimeout(() => {
         callback(
@@ -40,6 +42,7 @@ const validateField = (field, value) => {
             return value !== "" && value !== 0;
         case "title":
         case "description":
+        case "date":
             return value !== "";
         default:
             return false;
@@ -53,6 +56,7 @@ const CreateJob = () => {
         price: true,
         location: false,
         type: false,
+        date: true,
     });
     const [disable, setDisable] = useState(false);
     useEffect(() => {
@@ -63,6 +67,7 @@ const CreateJob = () => {
         notDisable &= data.location !== undefined;
         notDisable &= data.type !== undefined;
         notDisable &= data.price !== undefined;
+        notDisable &= data.date !== undefined;
         setDisable(!notDisable);
     }, [data, valid]);
     const handleChange = async (e, name) => {
@@ -94,7 +99,10 @@ const CreateJob = () => {
         } else {
             setData({
                 ...data,
-                [e.target.name]: e.target.value,
+                [e.target.name]:
+                    e.target.name === "price"
+                        ? +e.target.value
+                        : e.target.value,
             });
             await setValid({
                 ...valid,
@@ -102,9 +110,31 @@ const CreateJob = () => {
             });
         }
     };
-    const submit = (e) => {
+    const [createJob] = useMutation(CREATE_JOB, {
+        variables: data,
+    });
+    const submit = async (e) => {
         e.preventDefault();
-        console.log(data, valid);
+        console.log(data);
+        try {
+            const result = await createJob();
+            console.log(result.data);
+
+            const { title, date } = result.data.createJob;
+            alert(title, date);
+        } catch (e) {
+            console.log(e.message);
+            // setErrorModal(true);
+            // setErrorMsg(
+            //     e.message === "EMAIL_EXISTS"
+            //         ? "Email already registered"
+            //         : e.message === "INVALID_EMAIL"
+            //         ? "User not registered"
+            //         : e.message === "INVALID_PASSWORD"
+            //         ? "Please enter correct password"
+            //         : "Something went wrong. Please try again later",
+            // );
+        }
     };
     return (
         <div className='col-11 col-md-10 col-lg-9 job-form mx-auto p-2 p-md-3 my-2 my-md-3'>
@@ -113,7 +143,7 @@ const CreateJob = () => {
 
             <Form onSubmit={submit}>
                 <div className='row mx-0'>
-                    <FormGroup className='col-12 col-md-6 px-0 pr-1'>
+                    <FormGroup className='col-12 col-md-4 px-0 pr-md-1'>
                         <Label className='job-title'>
                             <h6>Title</h6>
                         </Label>
@@ -128,7 +158,7 @@ const CreateJob = () => {
                         />
                         <FormFeedback>Please enter a valid title</FormFeedback>
                     </FormGroup>
-                    <FormGroup className='col-12 col-md-6 px-0 pl-1'>
+                    <FormGroup className='col-12 col-md-4 px-0 px-md-1'>
                         <Label className='job-title'>
                             <h6>Type</h6>
                         </Label>
@@ -168,9 +198,7 @@ const CreateJob = () => {
                             Please enter a valid Job Type
                         </FormFeedback>
                     </FormGroup>
-                </div>
-                <div className='row mx-0'>
-                    <FormGroup className='col-12 col-md-6 px-0 pr-1'>
+                    <FormGroup className='col-12 col-md-4 px-0 pl-md-1'>
                         <Label className='job-title'>
                             <h6>Price</h6>
                         </Label>
@@ -189,7 +217,25 @@ const CreateJob = () => {
                         />
                         <FormFeedback>Please enter a valid Price</FormFeedback>
                     </FormGroup>
-                    <FormGroup className='col-12 col-md-6 px-0 pl-1'>
+                </div>
+                <div className='row mx-0'>
+                    <FormGroup className='col-12 col-md-6 px-0 pr-md-1'>
+                        <Label className='job-title'>
+                            <h6>Timings</h6>
+                        </Label>
+                        <Input
+                            type='datetime-local'
+                            name='date'
+                            id='date'
+                            placeholder='datetime Placeholder'
+                            onChange={handleChange}
+                            required
+                            invalid={data?.date === "" || !valid.date}
+                        />
+                        <FormFeedback>Please enter a valid Price</FormFeedback>
+                    </FormGroup>
+
+                    <FormGroup className='col-12 col-md-6 px-0 pl-md-1'>
                         <Label className='job-title'>
                             <h6>Location</h6>
                         </Label>
