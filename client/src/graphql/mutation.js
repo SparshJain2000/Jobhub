@@ -69,4 +69,37 @@ const SIGNUP_WORKER = gql`
         }
     }
 `;
-export { LOGIN_EMPLOYER, SIGNUP_EMPLOYER, LOGIN_WORKER, SIGNUP_WORKER };
+const CREATE_JOB = gql`
+    mutation CreateJob(
+        $title: String!
+        $description: String
+        $type: String
+        $date: String
+        $location: InputLocation
+        $price: Float!
+    ) {
+        createJob(
+            jobInput: {
+                title: $title
+                description: $description
+                type: $type
+                date: $date
+                location: $location
+                price: $price
+            }
+        ) {
+            title
+            date
+            type {
+                title
+            }
+        }
+    }
+`;
+export {
+    LOGIN_EMPLOYER,
+    SIGNUP_EMPLOYER,
+    LOGIN_WORKER,
+    SIGNUP_WORKER,
+    CREATE_JOB,
+};
