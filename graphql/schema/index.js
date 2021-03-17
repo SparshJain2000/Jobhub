@@ -120,6 +120,7 @@ module.exports = buildSchema(`
                 jobs: [Job!]!
                 job(id:ID!): Job!
                 employee(id:ID!): Employee!
+                currentEmployer: Employer!
                 searchJobs(params:JobQuery!): [Job!]
                 searchEmployees(params:EmployeeQuery!): [Employee!]
                 employers:[Employer!]!
