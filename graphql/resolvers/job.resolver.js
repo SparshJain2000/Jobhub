@@ -1,4 +1,5 @@
 const Job = require("../../models/job.model");
+const Employer = require("../../models/employer.model");
 const { transformJob, transformJobInput } = require("../helpers/index");
 const {
     jobQuery,
@@ -55,6 +56,9 @@ module.exports = {
             const job = new Job(
                 await transformJobInput({ ...jobInput, creator: req.userId }),
             );
+            const employer = await Employer.findById(req.userId);
+            employer.jobs = [...employer.jobs, job._id];
+            await employer.save();
             await job.save();
             return job;
         } catch (e) {
