@@ -4,13 +4,15 @@ import Job from "./pages/job.page";
 import Worker from "./pages/worker.page";
 import AuthEmployer from "./pages/authEmployer.page";
 import AuthWorker from "./pages/authWorker.page";
+import CreateJob from "./pages/createjob.page";
+import Profile from "./pages/profile.page";
 import About from "./pages/about.page";
 import Navbar from "./components/navbar.component";
 import Footer from "./components/footer.component";
 import Loading from "./components/loader.component";
 import { Component } from "react";
 import AuthContext from "./context/auth.context";
-import CreateJob from "./pages/createjob.page";
+
 class App extends Component {
     state = { loading: true, token: null, userId: null, isEmployer: false };
     componentDidMount() {
@@ -90,19 +92,6 @@ class App extends Component {
                                     exact
                                     component={AuthEmployer}
                                 />
-                                {this.state.token && this.state.isEmployer ? (
-                                    <Route
-                                        path='/employer/create-job'
-                                        exact
-                                        component={CreateJob}
-                                    />
-                                ) : (
-                                    <Redirect
-                                        from='/employer/create-job'
-                                        to='/employer/auth/login'
-                                    />
-                                )}
-
                                 <Route
                                     path='/professional/auth/login'
                                     exact
@@ -113,6 +102,67 @@ class App extends Component {
                                     exact
                                     component={AuthWorker}
                                 />
+                                {this.state.token ? (
+                                    <>
+                                        <Route
+                                            path={`/${
+                                                this.state.isEmployer
+                                                    ? "employer"
+                                                    : "professional"
+                                            }/create-job`}
+                                            exact
+                                            component={CreateJob}
+                                        />
+                                        <Route
+                                            path={`/${
+                                                this.state.isEmployer
+                                                    ? "employer"
+                                                    : "professional"
+                                            }/my-profile`}
+                                            exact
+                                            component={Profile}
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Redirect
+                                            from={`/${
+                                                this.state.isEmployer
+                                                    ? "employer"
+                                                    : "professional"
+                                            }/create-job`}
+                                            to={`/${
+                                                this.state.isEmployer
+                                                    ? "employer"
+                                                    : "professional"
+                                            }/auth/login`}
+                                        />
+                                        <Redirect
+                                            from={`/${
+                                                this.state.isEmployer
+                                                    ? "employer"
+                                                    : "professional"
+                                            }/my-profile`}
+                                            to={`/${
+                                                this.state.isEmployer
+                                                    ? "employer"
+                                                    : "professional"
+                                            }/auth/login`}
+                                        />
+                                    </>
+                                )}
+                                {/* {this.state.token && !this.state.isEmployer ? (
+                                    <Route
+                                        path='/professional/my-profile'
+                                        exact
+                                        component={Profile}
+                                    />
+                                ) : (
+                                    <Redirect
+                                        path='/professional/my-profile'
+                                        to='/professional/auth/login'
+                                    />
+                                )} */}
                             </Switch>
                         </main>
                     )}
