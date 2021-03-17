@@ -19,6 +19,13 @@
         text-decoration: none;
         background-color: transparent !important;
     }
+    .link {
+        padding: 0.375rem 0.75rem;
+    }
+    .btn-profile {
+        border: 1px solid $info;
+        border-radius: 0.5rem;
+    }
 }
 
 li.nav-item {

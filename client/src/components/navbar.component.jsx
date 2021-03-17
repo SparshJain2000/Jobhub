@@ -119,7 +119,7 @@ const NavbarComponent = () => {
                                 Hire Professionals
                             </NavLink>
                         </NavItem>
-                        {(!context.token || context.isEmployer) && (
+                        {!context.token ? (
                             <NavItem className='m-1 my-2 my-lg-1  ml-lg-auto '>
                                 <NavLink to='/professional/auth/login'>
                                     Register as Professional
@@ -148,13 +148,51 @@ const NavbarComponent = () => {
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
                             </NavItem>
+                        ) : (
+                            <NavItem className='m-1 my-2 my-lg-1  ml-lg-auto btn-profile'>
+                                <NavLink
+                                    to={`/${
+                                        context.isEmployer
+                                            ? "employer"
+                                            : "professional"
+                                    }/my-profile`}>
+                                    My Profile
+                                </NavLink>
+                                <UncontrolledDropdown
+                                    nav
+                                    inNavbar
+                                    className='display-inline px-0'>
+                                    <DropdownToggle
+                                        nav
+                                        caret
+                                        className='display-inline px-0'></DropdownToggle>
+                                    <DropdownMenu className='dropdown-menu-right'>
+                                        <DropdownItem>
+                                            <NavLink
+                                                to={`/${
+                                                    context.isEmployer
+                                                        ? "employer"
+                                                        : "professional"
+                                                }/my-profile`}
+                                                exact>
+                                                My Profile
+                                            </NavLink>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <NavLink
+                                                to={`/${
+                                                    context.isEmployer
+                                                        ? "employer"
+                                                        : "professional"
+                                                }/my-jobs`}>
+                                                My Jobs
+                                            </NavLink>
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+                            </NavItem>
                         )}
-                        <NavItem
-                            className={`m-1 my-2 my-lg-1 ${
-                                context.token && !context.isEmployer
-                                    ? "ml-lg-auto"
-                                    : ""
-                            }`}>
+                        <NavItem className={`m-1 my-2 my-lg-1 ml-lg-auto}`}>
                             {context.token ? (
                                 <span className='link' onClick={context.logout}>
                                     Logout
