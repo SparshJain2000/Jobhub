@@ -565,6 +565,15 @@
   border-radius: 0.5rem;
 }
 
+.navbar .btn-profile a:hover {
+  color: #e7e7de !important;
+}
+
+.navbar .btn-profile:hover {
+  color: white;
+  background-color: #348ed8;
+}
+
 li.nav-item {
   text-align: center !important;
 }

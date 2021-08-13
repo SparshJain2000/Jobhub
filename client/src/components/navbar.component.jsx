@@ -192,6 +192,13 @@ const NavbarComponent = () => {
                                 </UncontrolledDropdown>
                             </NavItem>
                         )}
+                        {context.token && context.isEmployer && (
+                            <NavItem className='m-1 my-2 my-lg-1'>
+                                <NavLink to='/employer/create-job' className=''>
+                                    Post a job
+                                </NavLink>
+                            </NavItem>
+                        )}
                         <NavItem className={`m-1 my-2 my-lg-1 ml-lg-auto}`}>
                             {context.token ? (
                                 <span className='link' onClick={context.logout}>
