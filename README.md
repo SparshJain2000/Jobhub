@@ -4,15 +4,15 @@
 
 A platform to connect job seekers and job providers
 
-## Technologies Used -
+### Technologies Used
 
-#### Back-end : Node js, Express JS, Graphql, JWT, Docker(containerization)
+- Back-end : Node js, Express JS, Graphql, JWT, Docker(containerization)
 
-#### Database : Mongo DB
+- Database : Mongo DB
 
-#### Front-end : ReactJS, Bootstrap, SCSS
+- Front-end : ReactJS, Bootstrap, SCSS
 
-## Installation :
+### Installation
 
 #### Install mongoDB and NodeJS
 
@@ -24,7 +24,7 @@ git clone https://github.com/SparshJain2000/Jobhub.git
 
 #### Declare environment variables
 
-###### Create a file .env
+##### Create a file .env
 
 ```txt
 DB_URI = 'Your mongo url'
@@ -51,6 +51,8 @@ Build the container using docker compose
 docker-compose up
 ```
 
+### Running locally(without docker)
+
 #### Install dependencies
 
 ```bash
@@ -64,9 +66,9 @@ npm install --dev
 npm run dev
 ```
 
-#### Server is on http://localhost:3000 and frontend is on [http://localhost:8080](http://localhost:8080)
+#### Server is on [http://localhost:3000](http://localhost:3000) and frontend is on [http://localhost:8080](http://localhost:8080)
 
-### For Front end
+#### For Front end
 
 Runs the app in the development mode.<br />
 Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
