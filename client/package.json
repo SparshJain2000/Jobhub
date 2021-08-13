@@ -18,9 +18,10 @@
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.1",
         "reactstrap": "^8.7.1",
+        "react-select": "^4.0.2",
         "web-vitals": "^0.2.4"
     },
-    "proxy": "http://localhost:3000/graphql",
+    "proxy": "http://localhost:7000/graphql",
     "scripts": {
         "start": "set PORT=8080 && react-scripts start",
         "build": "react-scripts build",
