@@ -1,13 +1,12 @@
 FROM node:10.16-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
+COPY package.json .
+COPY package-lock.json .
 
-RUN npm install --silent
+RUN npm install
 
 COPY . .
-
-EXPOSE 8080
-
+EXPOSE 3000
 CMD ["npm","start"]
