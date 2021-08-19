@@ -1,0 +1,49 @@
+version: "2.2"
+
+services:
+    server:
+        build:
+            context: ./
+            dockerfile: Dockerfile.dev
+        image: jobhub-server
+        container_name: jobhub-node-server
+        command: node server.js
+        volumes:
+            - ./:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - "7000:7000"
+        env_file: ./.env
+        environment:
+            - NODE_ENV=development
+        networks:
+            - jobhub-network
+
+    client:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        image: jobhub-client
+        container_name: jobhub-react-client
+        command: npm start
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./client/:/usr/app
+            - /usr/app/node_modules
+        depends_on:
+            - server
+        ports:
+            - "3000:3000"
+        networks:
+            - jobhub-network
+
+networks:
+    jobhub-network:
+        driver: bridge
+
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+        driver: local
