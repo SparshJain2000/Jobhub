@@ -6,11 +6,11 @@ A platform to connect job seekers and job providers
 
 ### Technologies Used
 
-- Back-end : Node js, Express JS, Graphql, JWT, Docker(containerization)
+-   Back-end : Node js, Express JS, Graphql, JWT, Docker(containerization)
 
-- Database : Mongo DB
+-   Database : Mongo DB
 
-- Front-end : ReactJS, Bootstrap, SCSS
+-   Front-end : ReactJS, Bootstrap, SCSS
 
 ### Installation
 
@@ -45,10 +45,20 @@ Build the client docker image
 docker build -t "server" .
 ```
 
+#### Dev container
+
 Build the container using docker compose
 
 ```bash
-docker-compose up
+cat docker-compose.dev.yml > docker-compose.yml
+docker-compose up --build
+```
+
+#### Production Contaienr
+
+```bash
+cat docker-compose.prd.yml > docker-compose.yml
+docker-compose up --build
 ```
 
 ### Running locally(without docker)
