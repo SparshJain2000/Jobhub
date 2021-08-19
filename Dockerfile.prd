@@ -1,0 +1,27 @@
+# Production Build
+
+# Stage 1: Build react client
+FROM node:10.16-alpine as client
+WORKDIR /app/client/
+COPY client/package*.json ./
+RUN npm install
+COPY client/ ./
+
+RUN npm build
+
+# Stage 2 : Build Server
+
+FROM node:10.16-alpine
+WORKDIR /usr/src/app/
+COPY --from=client /app/client/build/ ./client/build/
+
+WORKDIR /usr/src/app/
+COPY ./package*.json ./
+RUN npm install -qy
+COPY ./ ./
+
+ENV PORT 7000
+
+EXPOSE 7000
+
+CMD ["npm", "start"]
